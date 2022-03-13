@@ -1,0 +1,88 @@
+.navbar.sticky{
+    position: sticky !important;
+    top: 0 !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    width: 100% !important;
+}
+.User__Opts ul {
+    list-style-type: none;
+    padding:0 ;
+    margin: 0;
+}
+.User__Opts ul li:not(.NoStyle):hover{
+    background: white;
+    color:#000;
+}
+.User__Opts ul .NoStyle{
+    padding-bottom: 0rem;
+}
+.User__Opts ul li img {
+    height: 30px;
+    display: inline-block;
+}
+.User__Opts ul li {
+    cursor: pointer;
+    padding:8px 0;
+    padding-left:15px;
+    padding-right:30px;
+}
+.User__Opts{
+    display: none;
+    position: absolute;
+    right: 6.5rem;
+    top: 3.8rem;
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: #fff 1px 4px 10px;
+}
+.user-profile:hover  .User__Opts {
+    display: block;
+}
+
+.branding svg {
+    fill: #e50914;
+    height: 30px;
+}
+
+.username{
+    cursor: pointer;
+    font-size: 18px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+.navbar{
+    transition: all ease-in-out 0.2s;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    display: flex;
+    background: transparent;
+    justify-content: space-between;
+    align-items:  center;
+    padding : 1em 3em;
+}
+.user-profile{
+    cursor: pointer;
+    padding-right: 5em;
+    /* background-color: rebeccapurple; */
+}
+.user-profile img{
+    vertical-align: middle;
+    position: relative;
+    /* top:8px; */
+    height: 40px;
+}
+.selected__profile .username {
+    margin-bottom: 18px;
+}
+.selected__profile img{
+    height: 30px;
+    width: 30px;
+}
+.selected__profile{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}

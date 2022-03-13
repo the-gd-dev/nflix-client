@@ -1,0 +1,19 @@
+.movie-info {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-top :-3.5em;
+    bottom: 0;
+    z-index: 99;
+    opacity: 0;
+    transition: all 350ms ease-in-out;
+    padding:8px;
+}
+.movie-info  h3 {
+    margin: 0 !important;
+    font-weight: 500;
+    padding: 0 !important;
+}
+.movie-info  p {
+    font-size: 0.8rem;
+}
+
