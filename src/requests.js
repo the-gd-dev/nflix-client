@@ -1,5 +1,5 @@
-const APIKEY = process.env.MOVIE_DB_SECRET;
-const baseUri = process.env.MOVIE_DB_BASE_URL;
+const APIKEY = process.env.REACT_APP_MDB_SECRET;
+const baseUri = process.env.REACT_APP_MDB_URL;
 const requests = {
   fetchTrending: `${baseUri}/trending/all/week?api_key=${APIKEY}&language=en-US`,
   fetchTrendingToday: `${baseUri}/trending/all/day?api_key=${APIKEY}&language=en-US`,

@@ -1,4 +1,5 @@
 import React from "react";
+import ThreeDotLoader from "./ThreeDotLoader/ThreeDotLoader";
 const btnStyle = {
   backgroundColor: "#e50914",
   outline: 0,
@@ -12,10 +13,15 @@ const btnStyle = {
   fontSize: 18,
   color: "#fff",
 };
-const FormSubmitBtn = ({title, onClickHandler }) => {
+const FormSubmitBtn = ({
+  title,
+  onClickHandler,
+  isDisabled = false,
+  isLoading = false,
+}) => {
   return (
-    <button style={btnStyle} onClick={onClickHandler}>
-      {title}
+    <button disabled={isDisabled} style={btnStyle} onClick={onClickHandler}>
+      {isLoading ? <ThreeDotLoader /> : <div>{title}</div>}
     </button>
   );
 };

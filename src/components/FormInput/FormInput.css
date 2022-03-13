@@ -10,7 +10,7 @@
   border-radius: 5px;
   padding: 0;
 }
-.valid_field + label ,
+.valid_field + label,
 .field__wrap input:focus + label {
   margin-top: -3.8em !important;
   font-size: 14px !important;
@@ -46,3 +46,9 @@
   margin-left: 0.5em;
   padding: 0.5em 0;
 }
+.is-error {
+  position: relative;
+  top: -10px;
+  text-transform: capitalize;
+}
+

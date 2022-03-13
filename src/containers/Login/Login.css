@@ -1,72 +1,77 @@
 .login-container {
-	display: flex;
-	height: 100vh;
-	width: 100%;
+  display: flex;
+  height: 100vh;
+  width: 100%;
 }
 .login__header h1 {
-	font-weight: 500;
-	padding-bottom: 1em;
-	padding-top: 0;
-	margin: 0;
+  font-weight: 500;
+  padding-bottom: 1em;
+  padding-top: 0;
+  margin: 0;
 }
 
 .login__wrapper {
-    position: relative;
-    z-index: 5;
-	border-radius: 3px;
-	margin: auto;
-	background-color: rgba(2, 2, 2, 0.7);
-	padding: 3rem ;
-	width: 350px;   
+  position: relative;
+  z-index: 5;
+  border-radius: 3px;
+  margin: auto;
+  background-color: rgba(2, 2, 2, 0.7);
+  padding: 3rem;
+  width: 350px;
 }
-
 
 .register-nw a {
-    text-decoration: none;
-    color:#fff;
+  text-decoration: none;
+  color: #fff;
 }
 .facebook-login,
-.register-nw{
-    color:#8c8c8c;  
+.register-nw {
+  color: #8c8c8c;
 }
 .facebook-login i {
-    position: relative;
-    bottom: -0.15em;
-    font-size: 1.5rem;
+  position: relative;
+  bottom: -0.15em;
+  font-size: 1.5rem;
 }
-.facebook-login 
-{
-    margin-top: 3rem;
-    font-size: 14px;
-    margin-bottom: 1rem;
+.facebook-login {
+  margin-top: 3rem;
+  font-size: 14px;
+  margin-bottom: 1rem;
 }
-.register-nw{
-    font-size: 18px;
+.register-nw {
+  font-size: 18px;
 }
 
 .user__help label input {
-    position: relative;
-    top:1px;
+  position: relative;
+  top: 1px;
 }
 .user__help a {
-	text-decoration: none;
-    color: #808080;
+  text-decoration: none;
+  color: #808080;
 }
 .user__help {
-    padding: 8px 0;
-    color: #808080;
-    display: flex;
-    justify-content:space-between ;
-	font-size: 16px;
+  padding: 8px 0;
+  color: #808080;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
 }
-
-@media (max-width: 768px){
-    .login__wrapper {
-        position: relative;
-        z-index: 5;
-        margin: 0;
-        background-color: black;
-        width: 100%;
-        padding-top:25%;
-    }
+.login__wrapper button{
+    cursor: pointer !important;
+}
+.login__wrapper button:disabled {
+  background-color: rgba(230, 10, 21, 0.301) !important;
+  cursor: not-allowed !important;
+  pointer-events:  none !important;
+}
+@media (max-width: 768px) {
+  .login__wrapper {
+    position: relative;
+    z-index: 5;
+    margin: 0;
+    background-color: black;
+    width: 100%;
+    padding-top: 25%;
+  }
 }
