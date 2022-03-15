@@ -4,13 +4,25 @@ import bgBanner from "../../assets/images/home-banner.jpg";
 import FormSubmitBtn from "../../components/FormSubmitBtn";
 import FormInput from "../../components/FormInput/FormInput";
 import loginRules from "./loginRules";
+import axios from "../../axios";
 
 import "./Login.css";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
 const Login = () => {
+  const history = useHistory();
+  let user = useSelector(state => state.auth.user);
+  if(user) {
+    history.push('/home')
+  }
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [errors, setErros] = useState({});
- 
+  const [disableBtn, setDisableBtn] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const dispatch = useDispatch();
+  
   //add remove errors
   const updateErrors = (err, key) => {
     let updatedErrors = { ...errors };
@@ -25,9 +37,40 @@ const Login = () => {
   };
 
   //validations
-  useEffect(() => updateErrors(loginRules.validateEmail(username), 'username'), [username]);
-  useEffect(() => updateErrors(loginRules.validatePassword(password), "password"), [password]);
+  useEffect(
+    () => updateErrors(loginRules.validateEmail(username), "username"),
+    [username]
+  );
+  useEffect(
+    () => updateErrors(loginRules.validatePassword(password), "password"),
+    [password]
+  );
 
+  //login
+  const login = async () => {
+    //inputs empty
+    if (!username || !password) return alert("Data is missing.");
+    //errors present
+    if (errors.username || errors.password) return alert("Please resolve errors.");
+    setIsSubmit(true);
+    setDisableBtn(true);
+    try {
+      const { data } = await axios.post("users/login", {
+        username,
+        password,
+      });
+      dispatch(saveAuthToken(data.token));
+      dispatch(saveAuthUser(data.user));
+      history.push('/home');
+    } catch (error) {
+      let { data } = error.response;
+      updateErrors(data.message, "username");
+      console.log(error.response);
+    }
+
+    setIsSubmit(false);
+    setDisableBtn(false);
+  };
   //rendering
   return (
     <AppLayout bg={bgBanner} overlay={true}>
@@ -48,9 +91,14 @@ const Login = () => {
             onChangeHandler={(value) => setPassword(value)}
             error={errors.password}
           />
-          <FormSubmitBtn title="Login" />
+          <FormSubmitBtn
+            title="Login"
+            onClickHandler={login}
+            isDisabled={disableBtn}
+            isLoading={isSubmit}
+          />
           <div className="register-nw-login-nw-txt">
-            Not on Netflix ?<a href="/register"> Sign Up Now</a>.
+            Not on Netflix ? <Link to="/register">Sign Up Now</Link>.
             <div className="user__help">
               <a href="/">Need help?</a>
             </div>

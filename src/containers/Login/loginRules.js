@@ -7,7 +7,7 @@ export default {
   },
   validatePassword(password) {
     if (password != null && password == "") return "Password is required.";
-    if (password && password.length < 6) return "Password should be more then 6 characters.";
+    if (password && password.length < 6) return "Atleast 6 characters required.";
     return "";
   },
 };

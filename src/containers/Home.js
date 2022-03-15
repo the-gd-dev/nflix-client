@@ -6,7 +6,7 @@ import requests from '../requests';
 
 const Home = () => {
     return (
-        <AppLayout customClasses={['Home']}>
+        <AppLayout customClasses={['Home']} >
             <Banner />
             <Row isLargeRow={true} title="Top 10 in India today" fetchURL={requests.fetchTrendingToday} />
             <Row key={1} title="NETFLIX ORIGINALS" fetchURL={requests.fetchNetflixOriginals} />

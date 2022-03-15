@@ -19,7 +19,8 @@ export default {
   },
   validatePassword(password, confirmPassword) {
     if (password != null && password == "") return "Password is required.";
-    if (password != confirmPassword) return "Please confirm your password.";
+    if (password != null && password.length < 6) return "Atleast 6 characters required.";
+    if (confirmPassword != null && password != confirmPassword) return "Please confirm your password.";
     return "";
   },
 };

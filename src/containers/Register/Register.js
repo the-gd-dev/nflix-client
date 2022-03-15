@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import "./Register.css";
 import bgBanner from "../../assets/images/home-banner.jpg";
-import { useDispatch } from "react-redux";
-import { login } from "../../store/user/actions";
-import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import FormSubmitBtn from "../../components/FormSubmitBtn";
 import FormInput from "../../components/FormInput/FormInput";
 import signupRules from "./signupRules";
@@ -19,6 +18,13 @@ const Register = () => {
   const [disableBtn, setDisableBtn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  let user = useSelector((state) => state.auth.user);
+  if (user) {
+    history.push("/home");
+  }
   //add remove errors
   const updateErrors = (err, key) => {
     let updatedErrors = { ...errors };
@@ -29,29 +35,54 @@ const Register = () => {
         delete updatedErrors[key];
       }
     }
-    setErros(updatedErrors);
+    setErros((prevErr) => updatedErrors);
   };
-  
+
   //validations
-  useEffect(() => updateErrors(signupRules.validateName(name), 'name'), [name]);
-  useEffect(() => updateErrors(signupRules.validateEmail(email), 'email'), [email]);
-  useEffect(() => updateErrors(signupRules.validatePhoneNumber(phoneNumber),'phoneNumber'), [phoneNumber]);
-  useEffect(() => updateErrors(signupRules.validatePassword(password, confirmPassword), "password"), [password, confirmPassword]);
- 
-  const dispatch = useDispatch();
-  const history = useHistory();
+  useEffect(() => updateErrors(signupRules.validateName(name), "name"), [name]);
+  useEffect(
+    () => updateErrors(signupRules.validateEmail(email), "email"),
+    [email]
+  );
+  useEffect(
+    () =>
+      updateErrors(signupRules.validatePhoneNumber(phoneNumber), "phoneNumber"),
+    [phoneNumber]
+  );
+  useEffect(
+    () =>
+      updateErrors(
+        signupRules.validatePassword(password, confirmPassword),
+        "password"
+      ),
+    [password, confirmPassword]
+  );
 
   const register = async () => {
     //inputs empty
-    // if(!name || !email || !phoneNumber || !password) return false;
+    if (!name || !email || !phoneNumber || !password)
+      return alert("Data is missing.");
     //errors present
-    // if(errors.name || errors.email || errors.phoneNumber || errors.password) return false;
+    if (errors.name || errors.email || errors.phoneNumber || errors.password)
+      return alert("Please resolve errors.");
 
-    // setIsSubmit(true);
-    // setDisableBtn(true);
-
-    const response  = await axios.post('users/register', {});
-    console.log(response);
+    setIsSubmit(true);
+    setDisableBtn(true);
+    try {
+      const response = await axios.post("users/register", {
+        name,
+        email,
+        phoneNumber,
+        password,
+      });
+      dispatch(saveAuthToken(data.token));
+      dispatch(saveAuthUser(data.user));
+      history.push("/home");
+    } catch (error) {
+      console.log(error);
+    }
+    setIsSubmit(false);
+    setDisableBtn(false);
   };
 
   return (
@@ -88,17 +119,23 @@ const Register = () => {
             onChangeHandler={(value) => setPassword(value)}
             error={errors.password}
           />
+
           <FormInput
             type="password"
             label={"Confirm Password"}
             val={confirmPassword}
             onChangeHandler={(value) => setConfirmPassword(value)}
           />
-          <FormSubmitBtn title="Register" onClickHandler={register} isDisabled={disableBtn} isLoading={isSubmit} />
+          <FormSubmitBtn
+            title="Register"
+            onClickHandler={register}
+            isDisabled={disableBtn}
+            isLoading={isSubmit}
+          />
           {/* Registeration Form */}
 
           <div className="register-nw-login-nw-txt">
-            Already on Netflix ?<a href="/"> Sign In</a>.
+            Already on Netflix ? <Link to="/">Sign In</Link>.
             <div className="user__help">
               <a href="/">Need help?</a>
             </div>
