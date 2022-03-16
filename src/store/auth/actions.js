@@ -4,6 +4,10 @@ const {
   DELETE_USER,
   DELETE_TOKEN,
 } = require("./action-types");
+
+import { API_GET_USER } from "../../api/auth";
+import axios from "../../axios";
+
 /**
  * save jwt token
  * @param {*} token
@@ -49,5 +53,21 @@ export const removeAuthUser = () => {
   localStorage.removeItem("user");
   return {
     type: DELETE_USER,
+  };
+};
+
+/**
+ * fetch jwt user
+ * @returns
+ */
+export const fetchUser = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(API_GET_USER);
+      dispatch(saveAuthUser(data.user));
+    } catch (error) {
+      dispatch(removeToken());
+      dispatch(removeAuthUser());
+    }
   };
 };

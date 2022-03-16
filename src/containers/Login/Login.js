@@ -10,11 +10,12 @@ import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
+import { API_LOGIN_USER } from "../../api/auth";
 const Login = () => {
   const history = useHistory();
-  let user = useSelector(state => state.auth.user);
-  if(user) {
-    history.push('/home')
+  let user = useSelector((state) => state.auth.user);
+  if (user) {
+    history.push("/browse");
   }
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
@@ -22,7 +23,7 @@ const Login = () => {
   const [disableBtn, setDisableBtn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const dispatch = useDispatch();
-  
+
   //add remove errors
   const updateErrors = (err, key) => {
     let updatedErrors = { ...errors };
@@ -51,17 +52,18 @@ const Login = () => {
     //inputs empty
     if (!username || !password) return alert("Data is missing.");
     //errors present
-    if (errors.username || errors.password) return alert("Please resolve errors.");
+    if (errors.username || errors.password)
+      return alert("Please resolve errors.");
     setIsSubmit(true);
     setDisableBtn(true);
     try {
-      const { data } = await axios.post("users/login", {
+      const { data } = await axios.post(API_LOGIN_USER, {
         username,
         password,
       });
       dispatch(saveAuthToken(data.token));
       dispatch(saveAuthUser(data.user));
-      history.push('/home');
+      history.push("/browse");
     } catch (error) {
       let { data } = error.response;
       updateErrors(data.message, "username");
@@ -86,6 +88,7 @@ const Login = () => {
             error={errors.username}
           />
           <FormInput
+            type="password"
             label={"Password"}
             val={password}
             onChangeHandler={(value) => setPassword(value)}

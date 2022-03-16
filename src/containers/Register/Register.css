@@ -1,9 +1,69 @@
-.register-nw-login-nw-txt{
-    margin: 1.25rem 0;
-    font-size: 18px;
-    color:#8c8c8c;  
+.register-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.register__header h1 {
+  font-weight: 500;
+  padding-bottom: 1em;
+  padding-top: 0;
+  margin: 0;
+}
+
+.register__wrapper {
+  position: relative;
+  z-index: 5;
+  margin: 0;
+  background-color: black;
+  width: 100%;
+  padding-top: 25%;
+  padding: 3rem;
+}
+
+.register-nw {
+  font-size: 18px;
+}
+
+.user__help label input {
+  position: relative;
+  top: 1px;
+}
+.user__help a {
+  text-decoration: none;
+  color: #808080;
+}
+.user__help {
+  padding: 8px 0;
+  color: #808080;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+.register__wrapper button {
+  cursor: pointer !important;
+}
+.register__wrapper button:disabled {
+  background-color: rgba(230, 10, 21, 0.301) !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+@media (min-width: 768px) {
+  .register-container {
+    height: 92vh;
+  }
+  .register__wrapper {
+    padding: 3rem;
+    width: 480px;
+    margin: auto;
+  }
+}
+
+.register-nw-login-nw-txt {
+  margin: 1.25rem 0;
+  font-size: 18px;
+  color: #8c8c8c;
 }
 .register-nw-login-nw-txt a {
-    text-decoration: none;
-    color:#fff;
+  text-decoration: none;
+  color: #fff;
 }

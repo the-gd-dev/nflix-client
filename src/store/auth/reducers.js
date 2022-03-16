@@ -4,6 +4,7 @@ import {
   SAVE_TOKEN,
   SAVE_USER,
 } from "./action-types";
+
 //get user & token from localStorage if available;
 let lsToken = localStorage.getItem('auth_token');
 let lsUser = JSON.parse(localStorage.getItem('user'));
@@ -11,7 +12,14 @@ const initialState = {
   token: lsToken || null,
   user: lsUser || null,
 };
-console.log("initial state ", initialState);
+
+
+/**
+ * authentication reducer
+ * @param {*} state 
+ * @param {*} payload 
+ * @returns 
+ */
 export const authReducer = (state = initialState, payload) => {
   switch (payload.type) {
     case SAVE_TOKEN:
@@ -26,3 +34,4 @@ export const authReducer = (state = initialState, payload) => {
       return state;
   }
 };
+

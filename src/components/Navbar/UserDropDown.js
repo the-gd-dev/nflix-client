@@ -8,10 +8,18 @@ const UserDropDown = ({ user }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const logOut = () => {
-    dispatch(removeToken());
-    dispatch(removeAuthUser());
-    history.push('/')
+    if (confirm("Are you sure")) {
+      dispatch(removeToken());
+      dispatch(removeAuthUser());
+      history.push("/");
+    }
   };
+  const selectProfiles = () => {
+    history.push("/manage-profiles");
+  }
+  const settingsPage = () => {
+    history.push("/settings");
+  }
   return (
     <div className="user-profile">
       <div className="selected__profile">
@@ -26,10 +34,10 @@ const UserDropDown = ({ user }) => {
               <span className="username">{user.name}</span>
             </div>
           </li>
-          <li>
+          <li onClick={selectProfiles}>
             <i className="fa fa-users"></i> Manage Profiles
           </li>
-          <li>
+          <li onClick={settingsPage}>
             <i className="fa fa-cog"></i> Settings
           </li>
           <li onClick={logOut}>

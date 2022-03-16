@@ -29,7 +29,7 @@
 .User__Opts{
     display: none;
     position: absolute;
-    right: 6.5rem;
+    right: 16px;
     top: 3.8rem;
     background: rgba(0, 0, 0, 0.9);
     box-shadow: #fff 1px 4px 10px;
@@ -52,7 +52,7 @@
 }
 .navbar{
     transition: all ease-in-out 0.2s;
-    position: absolute;
+    position: relative;
     z-index: 999;
     width: 100%;
     display: flex;
@@ -63,7 +63,7 @@
 }
 .user-profile{
     cursor: pointer;
-    padding-right: 5em;
+    /* padding-right: 5em; */
     /* background-color: rebeccapurple; */
 }
 .user-profile img{

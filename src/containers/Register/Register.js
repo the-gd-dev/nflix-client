@@ -8,6 +8,7 @@ import FormSubmitBtn from "../../components/FormSubmitBtn";
 import FormInput from "../../components/FormInput/FormInput";
 import signupRules from "./signupRules";
 import axios from "../../axios";
+import { API_REGISTER_USER } from "../../api/auth";
 const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [name, setName] = useState(null);
@@ -69,7 +70,7 @@ const Register = () => {
     setIsSubmit(true);
     setDisableBtn(true);
     try {
-      const response = await axios.post("users/register", {
+      const response = await axios.post(API_REGISTER_USER, {
         name,
         email,
         phoneNumber,
@@ -77,7 +78,7 @@ const Register = () => {
       });
       dispatch(saveAuthToken(data.token));
       dispatch(saveAuthUser(data.user));
-      history.push("/home");
+      history.push("/browse");
     } catch (error) {
       console.log(error);
     }
@@ -87,9 +88,9 @@ const Register = () => {
 
   return (
     <AppLayout bg={bgBanner} overlay={true}>
-      <div className="login-container">
-        <div className="login__wrapper">
-          <div className="login__header">
+      <div className="register-container">
+        <div className="register__wrapper">
+          <div className="register__header">
             <h1>Register</h1>
           </div>
           {/* Registeration Form */}

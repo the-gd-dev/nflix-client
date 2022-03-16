@@ -7,8 +7,13 @@ import {
 } from "react-router-dom";
 import Home from "./containers/Home";
 import Login from "./containers/Login/Login";
-import SelectProfiles from "./containers/SelectProfiles";
 import Register from "./containers/Register/Register";
+import ManageProfiles from "./containers/ManageProfiles/ManageProfiles";
+// //store
+// import store from "./store/index";
+// import { fetchUser } from "./store/auth/actions";
+// store.dispatch(fetchUser());
+
 function App() {
   return (
     <Router>
@@ -25,11 +30,11 @@ function App() {
         <Route exact path="/register">
           <Register />
         </Route>
-        <Route exact path="/home">
+        <Route exact path="/browse">
           <Home />
         </Route>
-        <Route exact path="/select-profiles">
-          <SelectProfiles />
+        <Route exact path="/manage-profiles">
+          <ManageProfiles />
         </Route>
       </Switch>
     </Router>

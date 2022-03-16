@@ -1,6 +1,6 @@
 .login-container {
   display: flex;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 .login__header h1 {
@@ -13,11 +13,11 @@
 .login__wrapper {
   position: relative;
   z-index: 5;
-  border-radius: 3px;
-  margin: auto;
-  background-color: rgba(2, 2, 2, 0.7);
+  margin: 0;
+  background-color: black;
+  width: 100%;
+  padding-top: 25%;
   padding: 3rem;
-  width: 350px;
 }
 
 .register-nw a {
@@ -65,13 +65,13 @@
   cursor: not-allowed !important;
   pointer-events:  none !important;
 }
-@media (max-width: 768px) {
+@media (min-width: 768px) {
+  .login-container {
+    height: 92vh;
+  }
   .login__wrapper {
-    position: relative;
-    z-index: 5;
-    margin: 0;
-    background-color: black;
-    width: 100%;
-    padding-top: 25%;
+    padding: 3rem;
+    width: 450px;
+    margin: auto;
   }
 }
