@@ -5,11 +5,11 @@ const loader = ({large}) => {
     return (
         <ContentLoader
             height={large ? 250 : 150}
-            width={large ? 230 : 300}
+            width={400}
             backgroundColor="rgb(10, 10, 10)"
             foregroundColor="rgb(0 0 0)"
         >
-            <rect width={large ? 200 : 350} height={large ? 250 : 150} />
+            <rect width={400} height={large ? 250 : 150} />
         </ContentLoader>
     );
 }

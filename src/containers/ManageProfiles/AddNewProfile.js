@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import appConfig from "../../config/appConfig";
-import axios from "../../axios";
+import axios from "../../utils/axios";
 import { API_POST_PROFILE_CREATE } from "../../api/profiles";
 const AddNewProfile = ({ doneBtnHandler, cancelBtnHandler, showToggle }) => {
   const [name, setName] = useState(null);

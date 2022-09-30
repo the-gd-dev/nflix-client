@@ -4,7 +4,7 @@ import bgBanner from "../../assets/images/home-banner.jpg";
 import FormSubmitBtn from "../../components/FormSubmitBtn";
 import FormInput from "../../components/FormInput/FormInput";
 import loginRules from "./loginRules";
-import axios from "../../axios";
+import axios from "../../utils/axios";
 
 import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
@@ -38,14 +38,18 @@ const Login = () => {
   };
 
   //validations
-  useEffect(
-    () => updateErrors(loginRules.validateEmail(username), "username"),
-    [username]
-  );
-  useEffect(
-    () => updateErrors(loginRules.validatePassword(password), "password"),
-    [password]
-  );
+  // useEffect(() => {
+  //   updateErrors(loginRules.validateEmail(username), "username");
+  //   return () => {
+  //     updateErrors("", "username");
+  //   };
+  // }, [username]);
+  // useEffect(() => {
+  //   updateErrors(loginRules.validatePassword(password), "password");
+  //   return () => {
+  //     updateErrors("", "username");
+  //   };
+  // }, [password]);
 
   //login
   const login = async () => {
@@ -57,18 +61,18 @@ const Login = () => {
     setIsSubmit(true);
     setDisableBtn(true);
     try {
+    
+      const { data } = await axios.post(API_LOGIN_USER, {
+        username,
+        password,
+      });
+      dispatch(saveAuthToken(data.token));
+      dispatch(saveAuthUser(data.user));
       history.push("/browse");
-      // const { data } = await axios.post(API_LOGIN_USER, {
-      //   username,
-      //   password,
-      // });
-      // dispatch(saveAuthToken(data.token));
-      // dispatch(saveAuthUser(data.user));
-      
     } catch (error) {
       let { data } = error.response;
       updateErrors(data.message, "username");
-      console.log(error.response);
+      setTimeout( () => { updateErrors('', "username"); },1500)
     }
 
     setIsSubmit(false);
@@ -85,14 +89,20 @@ const Login = () => {
           <FormInput
             label={"Email address"}
             val={username}
-            onChangeHandler={(value) => setUsername(value)}
+            onChangeHandler={(value) => {
+              updateErrors(loginRules.validateEmail(value), "username");
+              setUsername(value);
+            }}
             error={errors.username}
           />
           <FormInput
             type="password"
             label={"Password"}
             val={password}
-            onChangeHandler={(value) => setPassword(value)}
+            onChangeHandler={(value) => {
+              updateErrors(loginRules.validatePassword(value), "password");
+              setPassword(value);
+            }}
             error={errors.password}
           />
           <FormSubmitBtn

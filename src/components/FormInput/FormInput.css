@@ -10,10 +10,11 @@
   border-radius: 5px;
   padding: 0;
 }
-.valid_field + label,
+
+
 .field__wrap input:focus + label {
-  margin-top: -3.8em !important;
-  font-size: 14px !important;
+  margin-top: -3.8em ;
+  font-size: 14px ;
   position: relative;
   z-index: 15;
 }
@@ -50,5 +51,11 @@
   position: relative;
   top: -10px;
   text-transform: capitalize;
+}
+.valid_field + label {
+  margin-top: -3.8em !important;
+  font-size: 14px !important;
+  position: relative;
+  z-index: 15;
 }
 

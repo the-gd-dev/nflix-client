@@ -1,6 +1,6 @@
 
 import { API_GET_USER } from "../../api/auth";
-import axios from "../../axios";
+import axios from "../../utils/axios";
 const {
   SAVE_TOKEN,
   SAVE_USER,

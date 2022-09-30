@@ -15,7 +15,7 @@ const Home = () => {
   }, [dispatch]);
   let user = useSelector((state) => state.auth.user);
   if (!user) {
-    // history.push("/");
+    history.push("/");
   }
   return (
     <AppLayout customClasses={["Home"]}>

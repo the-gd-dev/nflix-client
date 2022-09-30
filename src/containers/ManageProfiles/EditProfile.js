@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SingleProfie from "../../components/SingleProfie";
-import axios from "../../axios";
+import axios from "../../utils/axios";
 import { API_POST_PROFILE_UPDATE } from "../../api/profiles";
 
 const EditProfile = ({

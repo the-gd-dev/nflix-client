@@ -1,4 +1,4 @@
-
+/* eslint-disable import/no-anonymous-default-export */
 export default {
   validateName(name) {
     if (name !== null && name === "") return "Name is required.";
@@ -18,9 +18,9 @@ export default {
     return "";
   },
   validatePassword(password, confirmPassword) {
-    if (password != null && password == "") return "Password is required.";
-    if (password != null && password.length < 6) return "Atleast 6 characters required.";
-    if (confirmPassword != null && password != confirmPassword) return "Please confirm your password.";
+    if (password !== null && password === "") return "Password is required.";
+    if (password !== null && password.length < 6) return "Atleast 6 characters required.";
+    if (confirmPassword !== null && password !== confirmPassword) return "Please confirm your password.";
     return "";
   },
 };

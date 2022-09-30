@@ -5,7 +5,7 @@ import AppLayout from "../../components/AppLayout/AppLayout";
 import appConfig from "../../config/appConfig";
 import AddNewProfile from "./AddNewProfile";
 import "./ManageProfiles.css";
-import axios from "../../axios";
+import axios from "../../utils/axios";
 import { API_GET_PROFILES } from "../../api/profiles";
 import SingleProfie from "../../components/SingleProfie";
 import EditProfile from "./EditProfile";
@@ -20,11 +20,11 @@ const ManageProfiles = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    dispatch(fetchUser());
-    const { data } = await axios.get(API_GET_PROFILES);
-    setProfiles((prevState) => [...data.profiles]);
-  }, []);
+  // useEffect(async () => {
+  //   dispatch(fetchUser());
+  //   const { data } = await axios.get(API_GET_PROFILES);
+  //   setProfiles((prevState) => [...data.profiles]);
+  // }, []);
 
   //User Authentication
   let user = useSelector((state) => state.auth.user);

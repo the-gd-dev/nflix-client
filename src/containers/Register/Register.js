@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import "./Register.css";
 import bgBanner from "../../assets/images/home-banner.jpg";
@@ -7,7 +7,8 @@ import { Link, useHistory } from "react-router-dom";
 import FormSubmitBtn from "../../components/FormSubmitBtn";
 import FormInput from "../../components/FormInput/FormInput";
 import signupRules from "./signupRules";
-import axios from "../../axios";
+import axios from "../../utils/axios";
+import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
 import { API_REGISTER_USER } from "../../api/auth";
 const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState(null);
@@ -40,24 +41,24 @@ const Register = () => {
   };
 
   //validations
-  useEffect(() => updateErrors(signupRules.validateName(name), "name"), [name]);
-  useEffect(
-    () => updateErrors(signupRules.validateEmail(email), "email"),
-    [email]
-  );
-  useEffect(
-    () =>
-      updateErrors(signupRules.validatePhoneNumber(phoneNumber), "phoneNumber"),
-    [phoneNumber]
-  );
-  useEffect(
-    () =>
-      updateErrors(
-        signupRules.validatePassword(password, confirmPassword),
-        "password"
-      ),
-    [password, confirmPassword]
-  );
+  // useEffect(() => updateErrors(signupRules.validateName(name), "name"), [name]);
+  // useEffect(
+  //   () => updateErrors(signupRules.validateEmail(email), "email"),
+  //   [email]
+  // );
+  // useEffect(
+  //   () =>
+  //     updateErrors(signupRules.validatePhoneNumber(phoneNumber), "phoneNumber"),
+  //   [phoneNumber]
+  // );
+  // useEffect(
+  //   () =>
+  //     updateErrors(
+  //       signupRules.validatePassword(password, confirmPassword),
+  //       "password"
+  //     ),
+  //   [password, confirmPassword]
+  // );
 
   const register = async () => {
     //inputs empty
@@ -76,48 +77,78 @@ const Register = () => {
         phoneNumber,
         password,
       });
-      // dispatch(saveAuthToken(data.token));
-      // dispatch(saveAuthUser(data.user));
+      dispatch(saveAuthToken(response.token));
+      dispatch(saveAuthUser(response.user));
       history.push("/browse");
     } catch (error) {
-      console.log(error);
+      let { data } = error.response;
+      updateErrors(data.message, "bad_errors");
     }
     setIsSubmit(false);
     setDisableBtn(false);
   };
-
+  const topErrorStyle = {
+    marginTop: "15px",
+    color: "#ccc",
+    fontSize: 18,
+    fontWeight: "normal",
+  };
   return (
     <AppLayout bg={bgBanner} overlay={true}>
       <div className="register-container">
         <div className="register__wrapper">
           <div className="register__header">
-            <h1>Register</h1>
+            <h1>
+              Register
+              {errors.bad_errors && (
+                <h6 className="is-error" style={topErrorStyle}>
+                  {errors.bad_errors}
+                </h6>
+              )}
+            </h1>
           </div>
           {/* Registeration Form */}
           <FormInput
             label={"Name"}
             val={name}
             error={errors.name}
-            onChangeHandler={(value) => setName(value)}
+            onChangeHandler={(value) => {
+              updateErrors(signupRules.validateName(value), "name");
+              setName(value);
+            }}
           />
           <FormInput
             type="email"
             label={"Email Address"}
             val={email}
-            onChangeHandler={(value) => setEmail(value)}
+            onChangeHandler={(value) => {
+              updateErrors(signupRules.validateEmail(value), "email");
+              setEmail(value);
+            }}
             error={errors.email}
           />
           <FormInput
             label={"Phone Number"}
             val={phoneNumber}
-            onChangeHandler={(value) => setPhoneNumber(value)}
+            onChangeHandler={(value) => {
+              updateErrors(
+                signupRules.validatePhoneNumber(value),
+                "phoneNumber"
+              );
+              setPhoneNumber(value);
+            }}
             error={errors.phoneNumber}
           />
           <FormInput
             type="password"
             label={"Password"}
             val={password}
-            onChangeHandler={(value) => setPassword(value)}
+            onChangeHandler={(value) => {
+              updateErrors(
+                signupRules.validatePassword(value, confirmPassword)
+              );
+              setPassword(value);
+            }}
             error={errors.password}
           />
 
@@ -125,7 +156,10 @@ const Register = () => {
             type="password"
             label={"Confirm Password"}
             val={confirmPassword}
-            onChangeHandler={(value) => setConfirmPassword(value)}
+            onChangeHandler={(value) => {
+              updateErrors(signupRules.validatePassword(password, value));
+              setConfirmPassword(value);
+            }}
           />
           <FormSubmitBtn
             title="Register"

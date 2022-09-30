@@ -1,5 +1,5 @@
 import axios from "axios";
-let token = localStorage.getItem("auth_token");
+let token = localStorage.getItem("token");
 const instance = axios.create({
   headers: {
     "x-access-token": token || "",
