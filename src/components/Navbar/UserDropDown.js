@@ -8,7 +8,7 @@ const UserDropDown = ({ user }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const logOut = () => {
-    if (confirm("Are you sure")) {
+    if (window.confirm("Are you sure")) {
       dispatch(removeToken());
       dispatch(removeAuthUser());
       history.push("/");

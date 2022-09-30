@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import AppLayout from "../components/AppLayout/AppLayout";
 import Banner from "../components/Banner/Banner";
 import Row from "../components/Row/Row";
-import requests from "../requests";
+import { allRequests as requests } from "../api/movies";
 import { fetchUser } from "../store/auth/actions";
 
 const Home = () => {
@@ -12,10 +12,10 @@ const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser());
-  }, []);
+  }, [dispatch]);
   let user = useSelector((state) => state.auth.user);
   if (!user) {
-    history.push("/");
+    // history.push("/");
   }
   return (
     <AppLayout customClasses={["Home"]}>

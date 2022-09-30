@@ -1,3 +1,6 @@
+
+import { API_GET_USER } from "../../api/auth";
+import axios from "../../axios";
 const {
   SAVE_TOKEN,
   SAVE_USER,
@@ -5,8 +8,6 @@ const {
   DELETE_TOKEN,
 } = require("./action-types");
 
-import { API_GET_USER } from "../../api/auth";
-import axios from "../../axios";
 
 /**
  * save jwt token

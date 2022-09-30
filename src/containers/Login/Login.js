@@ -57,13 +57,14 @@ const Login = () => {
     setIsSubmit(true);
     setDisableBtn(true);
     try {
-      const { data } = await axios.post(API_LOGIN_USER, {
-        username,
-        password,
-      });
-      dispatch(saveAuthToken(data.token));
-      dispatch(saveAuthUser(data.user));
       history.push("/browse");
+      // const { data } = await axios.post(API_LOGIN_USER, {
+      //   username,
+      //   password,
+      // });
+      // dispatch(saveAuthToken(data.token));
+      // dispatch(saveAuthUser(data.user));
+      
     } catch (error) {
       let { data } = error.response;
       updateErrors(data.message, "username");

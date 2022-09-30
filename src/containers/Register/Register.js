@@ -76,8 +76,8 @@ const Register = () => {
         phoneNumber,
         password,
       });
-      dispatch(saveAuthToken(data.token));
-      dispatch(saveAuthUser(data.user));
+      // dispatch(saveAuthToken(data.token));
+      // dispatch(saveAuthUser(data.user));
       history.push("/browse");
     } catch (error) {
       console.log(error);
