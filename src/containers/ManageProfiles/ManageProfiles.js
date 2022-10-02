@@ -6,70 +6,95 @@ import appConfig from "../../config/appConfig";
 import AddNewProfile from "./AddNewProfile";
 import "./ManageProfiles.css";
 import axios from "../../utils/axios";
-import { API_GET_PROFILES } from "../../api/profiles";
+import { API_GET_PROFILES, API_POST_PROFILE_TRASH } from "../../api/profiles";
 import SingleProfie from "../../components/SingleProfie";
 import EditProfile from "./EditProfile";
+import UpdateProfilePicture from "./UpdateProfilePicture";
 import CogIcon from "../../components/CogIcon";
-import { fetchUser } from "../../store/auth/actions";
+import { fetchUser, updateCurrentWatching } from "../../store/auth/actions";
+import LeftArrow from "../../components/LeftArrow";
+import ActionBtnGroup from "../../components/ActionBtnGroup/ActionBtnGroup";
+import ActionBtn from "../../components/ActionBtn/ActionBtn";
+import CloseIcon from "../../components/CloseIcon";
+import AddIcon from "../../components/AddIcon";
 const ManageProfiles = () => {
   const [profiles, setProfiles] = useState([]);
-  const [isEditProfiles, setIsEditProfiles] = useState(false);
-  const [showAddNewProfile, setShowAddNewProfile] = useState(false);
   const [editProfileData, setEditProfileData] = useState({});
-  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [currentSection, setCurrentSection] = useState(1);
+  const [manageProfile, setManageProfile] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-
-  // useEffect(async () => {
-  //   dispatch(fetchUser());
-  //   const { data } = await axios.get(API_GET_PROFILES);
-  //   setProfiles((prevState) => [...data.profiles]);
-  // }, []);
+  const user = useSelector((state) => state.auth.user);
+  useEffect(() => {
+    dispatch(fetchUser());
+    (async () => {
+      const { data } = await axios.get(API_GET_PROFILES);
+      setProfiles(data.profiles);
+    })();
+  }, []);
+  useEffect(() => {
+    if (!user) {
+      history.push("/");
+    }
+  }, [user]);
 
   //User Authentication
-  let user = useSelector((state) => state.auth.user);
-  if (!user) {
-    history.push("/");
-  }
 
   const editProfileHandler = (profile) => {
     setEditProfileData(profile);
-    setShowEditProfile(true);
+    setCurrentSection(2);
   };
-  const goToManageProfiles = () => {
-    setIsEditProfiles(true);
-  };
+
   const updateProfileHandler = (profile) => {
-    let updateProfile = profiles.find((p) => p._id === profile._id);
-    updateProfile.name = profile.name;
-    setIsEditProfiles(false);
-    setShowEditProfile(false);
+    const updatedProfiles = profiles.map((p) => {
+      if (p._id === profile._id) return profile;
+      return p;
+    });
+    setProfiles(updatedProfiles);
+    setManageProfile(false);
+    setCurrentSection(1);
   };
   const discardHandler = (type) => {
+    setManageProfile(false);
     if (type === "edit") {
-      setIsEditProfiles(false);
-      setShowEditProfile(false);
+      setCurrentSection(1);
     }
     if (type === "add") {
-      setShowAddNewProfile(false);
+      setCurrentSection(1);
     }
   };
-  const trashProfileHandler = (profile) => {
-    setIsEditProfiles(false);
-    setShowEditProfile(false);
+  const goBackToBrowse = () => {
+    history.push("/browse");
+  };
+  const updateDpHandler = () => {
+    setCurrentSection(4);
+  };
+  const trashProfileHandler = (profileId) => {
+    const updatedProfiles = profiles.filter(p => p._id !== profileId);
+    setProfiles(updatedProfiles);
+    setCurrentSection(1);
   };
   const createDoneBtnHandler = async (profile) => {
     setProfiles((prevState) => [...prevState, profile]);
-    setShowAddNewProfile(false);
+
+    setCurrentSection(1);
+  };
+  const displayPictureSetHandler = async (profile) => {
+    setEditProfileData(profile);
+    setCurrentSection(2);
+  };
+  const changeCurrentWatching = async (profile) => {
+    dispatch(updateCurrentWatching({ current_watching: profile._id }));
   };
   return (
     <AppLayout customClasses={["select__profiles"]}>
       <div className="page___container">
+        {/* Show Who's Watching */}
         <div
           className={
-            showAddNewProfile || showEditProfile
-              ? "manageProfiles___wrapper fetched__profile"
-              : "manageProfiles___wrapper  fetched__profile show"
+            currentSection === 1
+              ? "manageProfiles___wrapper fetched__profile show"
+              : "manageProfiles___wrapper fetched__profile"
           }
         >
           <h1>Who's Watching ?</h1>
@@ -78,8 +103,14 @@ const ManageProfiles = () => {
               <SingleProfie
                 profile={prof}
                 key={prof._id}
-                showEdit={isEditProfiles}
-                onEdit={(v) => editProfileHandler(v)}
+                showEdit={manageProfile}
+                onEdit={() => {}}
+                activeProfile={prof._id === user.current_watching._id}
+                onAvatarClick={(v) =>
+                  manageProfile
+                    ? editProfileHandler(v)
+                    : changeCurrentWatching(prof)
+                }
               />
             ))}
             <div className="profile__wrap">
@@ -95,48 +126,85 @@ const ManageProfiles = () => {
             {profiles.length < 4 ? (
               <div
                 className="profile__wrap add__new"
-                onClick={() => setShowAddNewProfile(true)}
+                onClick={() => setCurrentSection(3)}
               >
                 <div className="plus">
-                  <img src={appConfig.assetsUrl + "/images/add.png"} />
+                 <AddIcon />
                 </div>
                 <div className="profileName">Add Profile</div>
               </div>
             ) : null}
           </div>
-          <div className="manage__profile__action">
-            <button className="manage__btn" onClick={goToManageProfiles}>
-              <CogIcon />
-              <div className="title ml-4">Manage Profiles</div>
-            </button>
-          </div>
+          <ActionBtnGroup>
+            {!manageProfile ? (
+              <ActionBtn
+                btnClass="manage__btn"
+                icon={<CogIcon />}
+                title={"Manage Profiles"}
+                onClickHandler={() => setManageProfile(!manageProfile)}
+              />
+            ) : (
+              <ActionBtn
+                icon={<CloseIcon />}
+                btnClass="manage__btn"
+                title={"Cancel"}
+                onClickHandler={() => setManageProfile(!manageProfile)}
+              />
+            )}
+            {!manageProfile && (
+              <ActionBtn
+                btnClass="manage__btn"
+                icon={<LeftArrow />}
+                title={"Back"}
+                onClickHandler={goBackToBrowse}
+              />
+            )}
+          </ActionBtnGroup>
         </div>
+        {/* Show Edit Profile */}
         <div
           className={
-            showEditProfile
+            currentSection === 2
               ? "manageProfiles___wrapper show"
               : "manageProfiles___wrapper"
           }
         >
           <EditProfile
-            showToggle={showEditProfile}
+            showToggle={currentSection === 2}
             editData={editProfileData}
             doneBtnHandler={(v) => updateProfileHandler(v)}
             cancelBtnHandler={() => discardHandler("edit")}
             deleteBtnHandler={(v) => trashProfileHandler(v)}
+            updateProfilePic={updateDpHandler}
           />
         </div>
+        {/* Show Add New Profile */}
         <div
           className={
-            showAddNewProfile
+            currentSection === 3
               ? "manageProfiles___wrapper show"
               : "manageProfiles___wrapper"
           }
         >
           <AddNewProfile
-            showToggle={showAddNewProfile}
+            showToggle={currentSection === 3}
             doneBtnHandler={(v) => createDoneBtnHandler(v)}
             cancelBtnHandler={() => discardHandler("add")}
+          />
+        </div>
+        {/* Show Update Display Picture */}
+        <div
+          className={
+            currentSection === 4
+              ? "manageProfiles___wrapper show"
+              : "manageProfiles___wrapper"
+          }
+        >
+          <UpdateProfilePicture
+            showToggle={currentSection === 4}
+            editData={editProfileData}
+            doneBtnHandler={(v) => displayPictureSetHandler(v)}
+            cancelBtnHandler={(v) => displayPictureSetHandler(v)}
           />
         </div>
       </div>

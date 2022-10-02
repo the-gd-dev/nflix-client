@@ -1,0 +1,31 @@
+.action-btn {
+  background: transparent;
+  border: rgb(85, 85, 85) solid 3px;
+  color: #ffffff;
+  display: flex;
+  min-width: 100px;
+  padding: 8px;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+.action-btn:hover {
+  border-color: #ffffff;
+}
+.action-btn .custom-icon {
+  margin-right: 0.5em;
+}
+.action-btn.red__btn:hover {
+  background-color: #e50914;
+  color: #ffffff;
+  border: #e50914 solid 3px;
+}
+.action-btn.red__btn {
+  background: #fff;
+  border: #fff solid 3px;
+  color: #000;
+  width: 130px;
+  justify-content: center;
+  font-weight: bold;
+}

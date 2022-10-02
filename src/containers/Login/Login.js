@@ -13,16 +13,18 @@ import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
 import { API_LOGIN_USER } from "../../api/auth";
 const Login = () => {
   const history = useHistory();
-  let user = useSelector((state) => state.auth.user);
-  if (user) {
-    history.push("/browse");
-  }
+  const dispatch = useDispatch();
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [errors, setErros] = useState({});
   const [disableBtn, setDisableBtn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  useEffect(() => {
+    if (user) {
+      history.push("/browse");
+    }
+  }, [user, history]);
 
   //add remove errors
   const updateErrors = (err, key) => {
@@ -37,22 +39,9 @@ const Login = () => {
     setErros(updatedErrors);
   };
 
-  //validations
-  // useEffect(() => {
-  //   updateErrors(loginRules.validateEmail(username), "username");
-  //   return () => {
-  //     updateErrors("", "username");
-  //   };
-  // }, [username]);
-  // useEffect(() => {
-  //   updateErrors(loginRules.validatePassword(password), "password");
-  //   return () => {
-  //     updateErrors("", "username");
-  //   };
-  // }, [password]);
 
   //login
-  const login = async () => {
+  const onSubmit = async () => {
     //inputs empty
     if (!username || !password) return alert("Data is missing.");
     //errors present
@@ -61,18 +50,20 @@ const Login = () => {
     setIsSubmit(true);
     setDisableBtn(true);
     try {
-    
       const { data } = await axios.post(API_LOGIN_USER, {
         username,
         password,
       });
+      console.log('Login Data', data)
       dispatch(saveAuthToken(data.token));
       dispatch(saveAuthUser(data.user));
       history.push("/browse");
     } catch (error) {
       let { data } = error.response;
       updateErrors(data.message, "username");
-      setTimeout( () => { updateErrors('', "username"); },1500)
+      setTimeout(() => {
+        updateErrors("", "username");
+      }, 1500);
     }
 
     setIsSubmit(false);
@@ -107,7 +98,7 @@ const Login = () => {
           />
           <FormSubmitBtn
             title="Login"
-            onClickHandler={login}
+            onClickHandler={onSubmit}
             isDisabled={disableBtn}
             isLoading={isSubmit}
           />

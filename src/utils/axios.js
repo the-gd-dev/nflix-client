@@ -1,8 +1,7 @@
 import axios from "axios";
-let token = localStorage.getItem("token");
 const instance = axios.create({
   headers: {
-    "x-access-token": token || "",
+    "x-access-token": localStorage.getItem("auth_token") || "",
   },
   baseURL: process?.env?.REACT_APP_API_BASE_URL || '',
 });

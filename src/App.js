@@ -9,10 +9,6 @@ import Home from "./containers/Home";
 import Login from "./containers/Login/Login";
 import Register from "./containers/Register/Register";
 import ManageProfiles from "./containers/ManageProfiles/ManageProfiles";
-// //store
-// import store from "./store/index";
-// import { fetchUser } from "./store/auth/actions";
-// store.dispatch(fetchUser());
 
 function App() {
   return (

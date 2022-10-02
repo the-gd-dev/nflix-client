@@ -2,8 +2,7 @@ import React from "react";
 
 const CogIcon = () => {
   return (
-    <div>
-      {" "}
+    <div className="custom-icon">
       <svg
         id="Layer_1"
         x="0px"

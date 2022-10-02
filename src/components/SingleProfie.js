@@ -1,26 +1,33 @@
 import React from "react";
 import appConfig from "../config/appConfig";
+import CheckIcon from "./CheckIcon";
 import PencilIcon from "./PencilIcon";
 
-const SingleProfie = ({ profile, showEdit, onEdit }) => {
+const SingleProfie = ({ profile, showEdit, onEdit, showDone, onDone, onAvatarClick, activeProfile }) => {
   return (
-    <div className="profile__wrap">
+    <div className={"profile__wrap " + (activeProfile ? 'watching' : '')} onClick={() =>  onAvatarClick && onAvatarClick(profile)}>
       <div
         className="bgImage"
         style={{
           background: `url(${appConfig.assetsUrl}/images/avatars/${profile.avatar}.png) center no-repeat`,
-          backgroundSize: "cover",
         }}
       >
-        {showEdit ? (
+        {showEdit && (
           <div className="actions">
             <button className="edit__profile" onClick={() => onEdit(profile)}>
-              <PencilIcon />
+              {<PencilIcon />}
             </button>
           </div>
-        ) : null}
+        )}
+        {showDone && (
+          <div className="actions">
+            <button className="edit__profile" onClick={() => onDone(profile)}>
+              {<CheckIcon />}
+            </button>
+          </div>
+        )}
       </div>
-      <div className="profileName">{profile.name}</div>
+      {profile.name && <div className="profileName">{profile.name}</div>}
     </div>
   );
 };

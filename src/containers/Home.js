@@ -10,13 +10,17 @@ import { fetchUser } from "../store/auth/actions";
 const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
   useEffect(() => {
     dispatch(fetchUser());
-  }, [dispatch]);
-  let user = useSelector((state) => state.auth.user);
-  if (!user) {
-    history.push("/");
-  }
+  }, [])
+  
+  useEffect(() => {
+    if (!user) {
+      history.push("/");
+    }
+  }, [user, history]);
+  
   return (
     <AppLayout customClasses={["Home"]}>
       <Banner />
