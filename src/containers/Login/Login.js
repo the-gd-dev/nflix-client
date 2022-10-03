@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import bgBanner from "../../assets/images/home-banner.jpg";
 import FormSubmitBtn from "../../components/FormSubmitBtn";
@@ -8,7 +8,7 @@ import axios from "../../utils/axios";
 
 import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
 import { API_LOGIN_USER } from "../../api/auth";
 const Login = () => {
@@ -19,12 +19,6 @@ const Login = () => {
   const [errors, setErros] = useState({});
   const [disableBtn, setDisableBtn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const user = useSelector((state) => state.auth.user);
-  useEffect(() => {
-    if (user) {
-      history.push("/browse");
-    }
-  }, [user, history]);
 
   //add remove errors
   const updateErrors = (err, key) => {
@@ -38,7 +32,6 @@ const Login = () => {
     }
     setErros(updatedErrors);
   };
-
 
   //login
   const onSubmit = async () => {
@@ -54,12 +47,13 @@ const Login = () => {
         username,
         password,
       });
-      console.log('Login Data', data)
       dispatch(saveAuthToken(data.token));
       dispatch(saveAuthUser(data.user));
       history.push("/browse");
     } catch (error) {
-      let { data } = error.response;
+      console.error(error)
+      let { data } = error?.response || '';
+     
       updateErrors(data.message, "username");
       setTimeout(() => {
         updateErrors("", "username");

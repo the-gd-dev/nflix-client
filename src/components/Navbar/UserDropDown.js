@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import userIcon from "../../assets/images/user.jpg";
 import appConfig from "../../config/appConfig";
 import { removeAuthUser, removeToken } from "../../store/auth/actions";
 
@@ -21,18 +20,19 @@ const UserDropDown = ({ user }) => {
   const settingsPage = () => {
     history.push("/settings");
   }
+  console.log('user drop down', user)
   return (
     <div className="user-profile">
       <div className="selected__profile">
         <img src={`${appConfig.assetsUrl}/images/avatars/${user.current_watching.avatar}.png`} alt="Netflix Clone" height="30" />
-        <span className="username">{user.current_watching.name}</span>
+        <span className="username">{user?.current_watching?.name.split(' ')[0]}</span>
       </div>
       <div className="User__Opts">
         <ul>
           <li className="NoStyle">
             <div className="selected__profile" style={{ width: "80%" }}>
               <img src={`${appConfig.assetsUrl}/images/avatars/${user.current_watching.avatar}.png`} alt="Netflix Clone" height="30" />
-              <span className="username">{user.current_watching.name}</span>
+              <span className="username small-font">{user?.current_watching?.name.split(' ')[0]}</span>
             </div>
           </li>
           <li onClick={selectProfiles}>

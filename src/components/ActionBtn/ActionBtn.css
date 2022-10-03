@@ -3,9 +3,9 @@
   border: rgb(85, 85, 85) solid 3px;
   color: #ffffff;
   display: flex;
-  min-width: 100px;
+  min-width: 120px;
   padding: 8px;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   cursor: pointer;
   font-size: 1.25rem;

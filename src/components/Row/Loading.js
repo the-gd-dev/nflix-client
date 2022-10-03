@@ -6,7 +6,7 @@ const Loading = ({ isLarge, size }) => {
     loaderCount.push(index);
   }
   return (
-    <div className="row__posters">
+    <div className="row__posters loader__container">
       {loaderCount.map((c) => (
         <Loader large={isLarge} key={c} />
       ))}

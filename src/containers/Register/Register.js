@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import "./Register.css";
 import bgBanner from "../../assets/images/home-banner.jpg";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import FormSubmitBtn from "../../components/FormSubmitBtn";
 import FormInput from "../../components/FormInput/FormInput";
@@ -19,14 +19,8 @@ const Register = () => {
   const [errors, setErros] = useState({});
   const [disableBtn, setDisableBtn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-
   const dispatch = useDispatch();
   const history = useHistory();
-
-  let user = useSelector((state) => state.auth.user);
-  if (user) {
-    history.push("/home");
-  }
   //add remove errors
   const updateErrors = (err, key) => {
     let updatedErrors = { ...errors };

@@ -6,32 +6,44 @@ import Loading from "./Loading";
 import "./Row.css";
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
-const Row = ({ title, fetchURL, isLargeRow }) => {
+const Row = ({ title, fetchURL, isLargeRow, timeOutValue }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const elementId = title.replace(/\s/g, "_").toLowerCase();
   const [scrollPostion, setScrollPosition] = useState(0);
+
+  //setting banner and poster counts for diffrent screens
+  const [loadingSize, setLoadingSize] = useState({ posters: 5, banners: 6 });
+  useEffect(() => {
+    let windowInnerWidth = window.innerWidth;
+    if (windowInnerWidth < 576) {
+      setLoadingSize({ posters: 2, banners: 2 });
+    } else if (windowInnerWidth > 576 && windowInnerWidth < 650) {
+      setLoadingSize({ posters: 3, banners: 3 });
+    } else if (windowInnerWidth > 650 && windowInnerWidth < 768) {
+      setLoadingSize({ posters: 3, banners: 4 });
+    } else if (windowInnerWidth > 768 && windowInnerWidth < 992) {
+      setLoadingSize({ posters: 3, banners: 4 });
+    } else if (windowInnerWidth > 992 && windowInnerWidth < 1024) {
+      setLoadingSize({ posters: 4, banners: 5 });
+    } else if (windowInnerWidth > 1024) {
+      setLoadingSize({ posters: 5, banners: 6 });
+    }
+  }, []);
+  //setting banner and poster counts for diffrent screens
+
   useEffect(() => {
     const posterRow = document.getElementById(elementId).scrollLeft;
     setScrollPosition(posterRow);
     async function getMovies() {
-      setLoading(false);
+      setLoading(true);
       const response = await axiosInstance.get(fetchURL);
       setMovies(response.data.results);
-      setLoading(true);
+      setLoading(false);
       return response;
     }
-    if (!isLargeRow) {
-      setTimeout(() => {
-        getMovies();
-      }, 4000);
-    } else {
-      setTimeout(() => {
-        getMovies();
-      }, 4000);
-      // getMovies();
-    }
-  }, [fetchURL, elementId, isLargeRow]);
+    setTimeout(() => getMovies(), timeOutValue);
+  }, [fetchURL, elementId, isLargeRow, timeOutValue]);
   const scrollLeft = (e) => {
     scrollPostion < 0
       ? setScrollPosition(0)
@@ -51,7 +63,7 @@ const Row = ({ title, fetchURL, isLargeRow }) => {
         id={elementId}
         className={`row__posters  ${isLargeRow ? "posters" : "thumbnails"}`}
       >
-        {loading && movies.length > 0 ? (
+        {!loading && movies.length > 0 ? (
           movies.map((m, key) =>
             isLargeRow ? (
               key < 10 ? (
@@ -62,25 +74,29 @@ const Row = ({ title, fetchURL, isLargeRow }) => {
             )
           )
         ) : (
-          <Loading size={10} isLarge={isLargeRow} />
+          <Loading
+            size={isLargeRow ? loadingSize.banners : loadingSize.posters}
+            isLarge={isLargeRow}
+          />
         )}
       </div>
-      {movies.length > 0 ? (
+      {movies.length > 0 && !loading && (
         <div
           id=""
           className={`controls  ${isLargeRow ? "posters" : "thumbnails"}`}
         >
-          {scrollPostion > 0 ? (
+          {scrollPostion > 0 && !loading && (
             <button onClick={scrollLeft} className="left">
-              {" "}
               <i className="fa fa-angle-left"></i>
             </button>
-          ) : null}
-          <button onClick={scrollRight} className="right">
-            <i className="fa fa-angle-right"></i>
-          </button>
+          )}
+          {!loading && (
+            <button onClick={scrollRight} className="right">
+              <i className="fa fa-angle-right"></i>
+            </button>
+          )}
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

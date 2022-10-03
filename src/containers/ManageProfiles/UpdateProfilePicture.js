@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SingleProfie from "../../components/SingleProfie";
-import axios from "../../utils/axios";
-import { API_POST_PROFILE_UPDATE } from "../../api/profiles";
 import ActionBtnGroup from "../../components/ActionBtnGroup/ActionBtnGroup";
 import ActionBtn from "../../components/ActionBtn/ActionBtn";
 
-const EditProfile = ({
-  doneBtnHandler,
-  editData,
-  cancelBtnHandler,
-}) => {
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  useEffect(() => {
-    setName(editData.name);
-    setAvatar(editData.avatar);
-  }, [editData]);
-  const updateProfileData = async (av) => {
-    
-  };
+const EditProfile = ({ doneBtnHandler, editData, cancelBtnHandler }) => {
   const avtars = [];
   for (let i = 1; i < 17; i++) avtars.push(`256_${i}`);
   return (
@@ -31,19 +16,18 @@ const EditProfile = ({
               key={av}
               profile={{ avatar: av }}
               showDone={true}
-              onDone={() => doneBtnHandler({...editData, avatar : av})}
+              onDone={() => doneBtnHandler({ ...editData, avatar: av })}
             />
           ))}
         </div>
       </div>
       <ActionBtnGroup>
-        <ActionBtn 
-            btnClass={'undone_btn'}
-            title={'Cancel'}
-            onClickHandler={() => cancelBtnHandler(editData)}
+        <ActionBtn
+          btnClass={"undone_btn"}
+          title={"Cancel"}
+          onClickHandler={() => cancelBtnHandler(editData)}
         />
       </ActionBtnGroup>
-      
     </div>
   );
 };

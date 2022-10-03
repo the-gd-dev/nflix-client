@@ -1,4 +1,5 @@
-import { API_GET_USER, API_UPDATE_USER } from "../../api/auth";
+import store from "..";
+import { API_GET_USER } from "../../api/auth";
 import axios from "../../utils/axios";
 const {
   SAVE_TOKEN,
@@ -36,11 +37,24 @@ export const removeToken = () => {
  * @param {*} token
  * @returns
  */
-export const saveAuthUser = (user) => {
-  localStorage.setItem("user", JSON.stringify(user));
+export const saveAuthUser = (userData) => {
+  localStorage.setItem(
+    "user",
+    JSON.stringify({
+      ...userData,
+      current_watching:
+        JSON.parse(localStorage.getItem("currently_watching")) ||
+        userData.profiles[0],
+    })
+  );
   return {
     type: SAVE_USER,
-    user,
+    user: {
+      ...userData,
+      current_watching:
+        JSON.parse(localStorage.getItem("currently_watching")) ||
+        userData.profiles[0],
+    },
   };
 };
 
@@ -59,11 +73,27 @@ export const removeAuthUser = () => {
  * fetch jwt user
  * @returns
  */
- export const updateCurrentWatching = (profile) => {
+export const updateCurrentWatching = (data) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(API_UPDATE_USER, profile);
-      dispatch(saveAuthUser(data.user));
+      const storeState = store.getState();
+      const savedUser = storeState.auth.user;
+      if (data?.current_watching && localStorage.getItem("currently_watching")) {
+        localStorage.setItem("currently_watching", JSON.stringify(data.current_watching));
+        dispatch(saveAuthUser({ ...savedUser, current_watching: data.current_watching }));
+      } else {
+        localStorage.setItem(
+          "currently_watching",
+          JSON.stringify(savedUser.profiles[0])
+        );
+        dispatch(
+          saveAuthUser({
+            ...savedUser,
+            current_watching: savedUser.profiles[0],
+          })
+        );
+      }
+      // const { data } = await axios.post(API_UPDATE_USER, profile);
     } catch (error) {
       // dispatch(removeToken());
       // dispatch(removeAuthUser());
@@ -81,8 +111,11 @@ export const fetchUser = () => {
       const { data } = await axios.get(API_GET_USER);
       dispatch(saveAuthUser(data.user));
     } catch (error) {
-      // dispatch(removeToken());
-      // dispatch(removeAuthUser());
+      const { status } = error?.response;
+      if (status === 401 || status === 403) {
+        dispatch(removeToken());
+        dispatch(removeAuthUser());
+      }
     }
   };
 };

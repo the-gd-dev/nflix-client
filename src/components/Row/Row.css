@@ -1,84 +1,101 @@
 .row__posters {
-	display: flex;
-	overflow-y: hidden;
-	overflow-x: scroll;
-	padding: 15px;
-	transition: transform 300ms;
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 15px;
+  column-gap: 2em;
+  transition: transform 300ms;
+}
+.content-loader rect,
+.content-loader {
+  height: 100px;
+  width: 100px;
+}
+.loader__container {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  align-items: flex-end;
+  justify-content: center;
+  overflow-x: scroll;
+  padding: 15px;
+  column-gap: 2em;
+  transition: transform 300ms;
 }
 .row h2 {
-	padding-top: 1.5rem;
-	padding-bottom: 1rem;
-	padding-left: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
 }
 .row__posters.posters .poster__wrap img {
-	max-height: 250px;
+  max-height: 250px;
 }
 .row__posters.thumbnails .poster__wrap img {
-	max-height: 200px;
+  max-height: 200px;
 }
 .row__posters::-webkit-scrollbar {
-	display: none;
+  display: none;
 }
 .poster__wrap img,
 .poster__wrap {
-	transition: transform 300ms;
+  transition: transform 300ms;
 }
-    
+
 .poster__wrap {
-	object-fit: cover;
-	margin-right: 1em;
-	cursor: pointer;
-	width: 100%;
-    z-index: 5;
+  object-fit: cover;
+  margin-right: 1em;
+  cursor: pointer;
+  width: 100%;
+  z-index: 5;
 }
-.row__posters.posters .poster__wrap img:hover{
-    transform: scale(1.25);
+.row__posters.posters .poster__wrap img:hover {
+  transform: scale(1.25);
 }
 .row__posters.thumbnails .poster__wrap:hover {
-	transform: scale(1.05);
+  transform: scale(1.05);
 }
 .poster__wrap:hover .movie-info {
-	opacity: 1;
+  opacity: 1;
 }
 .controls.posters {
-	top: -270px;
+  top: -270px;
 }
 .controls.thumbnails {
-	top: -215px;
+  top: -215px;
 }
 .controls.posters button {
-	height: 250px;
+  height: 250px;
 }
 .controls.thumbnails button {
-	height: 200px;
+  height: 200px;
 }
 
 .controls {
-	position: relative;
-	z-index: 10;
-	width: 100%;
+  position: relative;
+  z-index: 10;
+  width: 100%;
 }
 .controls button i {
-	font-weight: 200;
+  font-weight: 200;
 }
 .controls button:hover {
-	background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.8);
 }
 .controls button {
-	transition: transform 300ms;
-	position: absolute;
-	outline: none;
-	border: none;
-	cursor: pointer;
-	color: #fff;
-	background: rgba(0, 0, 0, 0.3);
-	width: 65px;
-	font-size: 2rem;
+  transition: transform 300ms;
+  position: absolute;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  width: 65px;
+  font-size: 2rem;
 }
 .controls .left {
-	left: 0;
+  left: 0;
 }
 
 .controls .right {
-	right: 0;
+  right: 0;
 }

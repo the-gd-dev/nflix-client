@@ -6,12 +6,12 @@ import appConfig from "../../config/appConfig";
 import AddNewProfile from "./AddNewProfile";
 import "./ManageProfiles.css";
 import axios from "../../utils/axios";
-import { API_GET_PROFILES, API_POST_PROFILE_TRASH } from "../../api/profiles";
+import { API_GET_PROFILES } from "../../api/profiles";
 import SingleProfie from "../../components/SingleProfie";
 import EditProfile from "./EditProfile";
 import UpdateProfilePicture from "./UpdateProfilePicture";
 import CogIcon from "../../components/CogIcon";
-import { fetchUser, updateCurrentWatching } from "../../store/auth/actions";
+import { updateCurrentWatching } from "../../store/auth/actions";
 import LeftArrow from "../../components/LeftArrow";
 import ActionBtnGroup from "../../components/ActionBtnGroup/ActionBtnGroup";
 import ActionBtn from "../../components/ActionBtn/ActionBtn";
@@ -26,24 +26,15 @@ const ManageProfiles = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   useEffect(() => {
-    dispatch(fetchUser());
     (async () => {
       const { data } = await axios.get(API_GET_PROFILES);
       setProfiles(data.profiles);
     })();
   }, []);
-  useEffect(() => {
-    if (!user) {
-      history.push("/");
-    }
-  }, [user]);
-
-  //User Authentication
-
   const editProfileHandler = (profile) => {
     setEditProfileData(profile);
     setCurrentSection(2);
-  };
+  }
 
   const updateProfileHandler = (profile) => {
     const updatedProfiles = profiles.map((p) => {
@@ -76,7 +67,6 @@ const ManageProfiles = () => {
   };
   const createDoneBtnHandler = async (profile) => {
     setProfiles((prevState) => [...prevState, profile]);
-
     setCurrentSection(1);
   };
   const displayPictureSetHandler = async (profile) => {
@@ -84,7 +74,8 @@ const ManageProfiles = () => {
     setCurrentSection(2);
   };
   const changeCurrentWatching = async (profile) => {
-    dispatch(updateCurrentWatching({ current_watching: profile._id }));
+    dispatch(updateCurrentWatching({ current_watching: profile }));
+    goBackToBrowse();
   };
   return (
     <AppLayout customClasses={["select__profiles"]}>
@@ -131,7 +122,7 @@ const ManageProfiles = () => {
                 <div className="plus">
                  <AddIcon />
                 </div>
-                <div className="profileName">Add Profile</div>
+                <div className="profileName">Add New Profile</div>
               </div>
             ) : null}
           </div>

@@ -3,7 +3,9 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import NetflixSvgLogo from "../NetflixSvgLogo";
 import UserDropDown from "./UserDropDown";
+import { useHistory } from "react-router-dom";
 function Navbar() {
+  const history = useHistory();
   const stateUser = useSelector((state) => state.auth.user);
   useEffect(() => {
     window.addEventListener("scroll", function () {
@@ -16,7 +18,7 @@ function Navbar() {
   }, []);
   return (
     <nav className="navbar" id="navbar-main">
-      <div className="branding">
+      <div className="branding" onClick={() => history.push('/browse')}>
         <NetflixSvgLogo />
       </div>
       {stateUser ? <UserDropDown user={stateUser} /> : null}
