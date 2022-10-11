@@ -1,7 +1,7 @@
 import React from "react";
 import AppLayout from "../components/AppLayout/AppLayout";
 import Banner from "../components/Banner/Banner";
-import Row from "../components/Row/Row";
+import Row from "../components/UI/Row/Row";
 import { allRequests as requests } from "../api/movies";
 
 const Home = () => {

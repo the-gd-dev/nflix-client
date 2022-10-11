@@ -4,8 +4,8 @@ import "./Register.css";
 import bgBanner from "../../assets/images/home-banner.jpg";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import FormSubmitBtn from "../../components/FormSubmitBtn";
-import FormInput from "../../components/FormInput/FormInput";
+import FormSubmitBtn from "../../components/UI/FormSubmitBtn";
+import FormInput from "../../components/UI/FormInput/FormInput";
 import signupRules from "./signupRules";
 import axios from "../../utils/axios";
 import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
@@ -33,26 +33,6 @@ const Register = () => {
     }
     setErros((prevErr) => updatedErrors);
   };
-
-  //validations
-  // useEffect(() => updateErrors(signupRules.validateName(name), "name"), [name]);
-  // useEffect(
-  //   () => updateErrors(signupRules.validateEmail(email), "email"),
-  //   [email]
-  // );
-  // useEffect(
-  //   () =>
-  //     updateErrors(signupRules.validatePhoneNumber(phoneNumber), "phoneNumber"),
-  //   [phoneNumber]
-  // );
-  // useEffect(
-  //   () =>
-  //     updateErrors(
-  //       signupRules.validatePassword(password, confirmPassword),
-  //       "password"
-  //     ),
-  //   [password, confirmPassword]
-  // );
 
   const register = async () => {
     //inputs empty

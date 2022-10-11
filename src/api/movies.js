@@ -1,9 +1,8 @@
 import axios from "axios";
 export const axiosInstance = axios.create({
-  baseURL: process?.env?.REACT_APP_MDB_URL || "https://api.themoviedb.org/3",
-  params: {
-    api_key:
-      process?.env?.REACT_APP_MDB_SECRET || "30e4036cb53c7c547831db8e6c1dc4e6",
+  baseURL: process?.env?.REACT_APP_MDB_URL,
+  params: { 
+    api_key: process?.env?.REACT_APP_MDB_SECRET,
   },
 });
 export const allRequests = {

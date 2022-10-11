@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../../api/movies";
+import { axiosInstance } from "../../../api/movies";
 import Backdrop from "../Backdrop/Backdrop";
-import Poster from "../Poster/Poster";
+import Poster from "../../Poster/Poster";
 import Loading from "./Loading";
 import "./Row.css";
 const baseUrl = "https://image.tmdb.org/t/p/original";
@@ -40,14 +40,13 @@ const Row = ({ title, fetchURL, isLargeRow, timeOutValue }) => {
       const response = await axiosInstance.get(fetchURL);
       setMovies(response.data.results);
       setLoading(false);
-      return response;
     }
-    setTimeout(() => getMovies(), timeOutValue);
+    const storeTimeout = setTimeout(() => getMovies(), timeOutValue);
+    return () => clearInterval(storeTimeout);
   }, [fetchURL, elementId, isLargeRow, timeOutValue]);
+  
   const scrollLeft = (e) => {
-    scrollPostion < 0
-      ? setScrollPosition(0)
-      : setScrollPosition((prev) => (prev -= 300));
+    scrollPostion < 0 ? setScrollPosition(0) : setScrollPosition((prev) => (prev -= 300));
     document.getElementById(elementId).scrollLeft -= 300;
     e.preventDefault();
   };
@@ -59,10 +58,7 @@ const Row = ({ title, fetchURL, isLargeRow, timeOutValue }) => {
   return (
     <div className="row">
       <h2>{title} </h2>
-      <div
-        id={elementId}
-        className={`row__posters  ${isLargeRow ? "posters" : "thumbnails"}`}
-      >
+      <div id={elementId} className={`row__posters  ${isLargeRow ? "posters" : "thumbnails"}`}>
         {!loading && movies.length > 0 ? (
           movies.map((m, key) =>
             isLargeRow ? (
@@ -81,10 +77,7 @@ const Row = ({ title, fetchURL, isLargeRow, timeOutValue }) => {
         )}
       </div>
       {movies.length > 0 && !loading && (
-        <div
-          id=""
-          className={`controls  ${isLargeRow ? "posters" : "thumbnails"}`}
-        >
+        <div id="" className={`controls  ${isLargeRow ? "posters" : "thumbnails"}`}>
           {scrollPostion > 0 && !loading && (
             <button onClick={scrollLeft} className="left">
               <i className="fa fa-angle-left"></i>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import bgBanner from "../../assets/images/home-banner.jpg";
-import FormSubmitBtn from "../../components/FormSubmitBtn";
-import FormInput from "../../components/FormInput/FormInput";
+import FormSubmitBtn from "../../components/UI/FormSubmitBtn";
+import FormInput from "../../components/UI/FormInput/FormInput";
 import loginRules from "./loginRules";
 import axios from "../../utils/axios";
 
@@ -55,13 +55,16 @@ const Login = () => {
       let { data } = error?.response || '';
      
       updateErrors(data.message, "username");
-      setTimeout(() => {
+
+      const updateError = setTimeout(() => {
         updateErrors("", "username");
+        setTimeout(updateError);
       }, 1500);
+      
+      setIsSubmit(false);
+      setDisableBtn(false);
     }
 
-    setIsSubmit(false);
-    setDisableBtn(false);
   };
   //rendering
   return (

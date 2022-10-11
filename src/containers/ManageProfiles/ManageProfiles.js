@@ -7,16 +7,16 @@ import AddNewProfile from "./AddNewProfile";
 import "./ManageProfiles.css";
 import axios from "../../utils/axios";
 import { API_GET_PROFILES } from "../../api/profiles";
-import SingleProfie from "../../components/SingleProfie";
+import SingleProfie from "../../components/SingleProfie/SingleProfie";
 import EditProfile from "./EditProfile";
 import UpdateProfilePicture from "./UpdateProfilePicture";
-import CogIcon from "../../components/CogIcon";
+import CogIcon from "../../components/Icons/CogIcon";
 import { updateCurrentWatching } from "../../store/auth/actions";
-import LeftArrow from "../../components/LeftArrow";
-import ActionBtnGroup from "../../components/ActionBtnGroup/ActionBtnGroup";
-import ActionBtn from "../../components/ActionBtn/ActionBtn";
-import CloseIcon from "../../components/CloseIcon";
-import AddIcon from "../../components/AddIcon";
+import LeftArrow from "../../components/Icons/LeftArrow";
+import ActionBtnGroup from "../../components/UI/ActionBtnGroup/ActionBtnGroup";
+import ActionBtn from "../../components/UI/ActionBtn/ActionBtn";
+import CloseIcon from "../../components/Icons/CloseIcon";
+import AddIcon from "../../components/Icons/AddIcon";
 const ManageProfiles = () => {
   const [profiles, setProfiles] = useState([]);
   const [editProfileData, setEditProfileData] = useState({});
@@ -26,17 +26,22 @@ const ManageProfiles = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   useEffect(() => {
-    (async () => {
+    const getProfiles = async () => {
       const { data } = await axios.get(API_GET_PROFILES);
       setProfiles(data.profiles);
-    })();
+    };
+    getProfiles();
   }, []);
   const editProfileHandler = (profile) => {
     setEditProfileData(profile);
     setCurrentSection(2);
-  }
+  };
 
-  const updateProfileHandler = (profile) => {
+
+  const updateProfileHandler = async (profile) => {
+    if (profile._id === user.current_watching._id) {
+        dispatch(updateCurrentWatching({ current_watching: profile }));
+    }
     const updatedProfiles = profiles.map((p) => {
       if (p._id === profile._id) return profile;
       return p;
@@ -61,7 +66,7 @@ const ManageProfiles = () => {
     setCurrentSection(4);
   };
   const trashProfileHandler = (profileId) => {
-    const updatedProfiles = profiles.filter(p => p._id !== profileId);
+    const updatedProfiles = profiles.filter((p) => p._id !== profileId);
     setProfiles(updatedProfiles);
     setCurrentSection(1);
   };
@@ -98,13 +103,11 @@ const ManageProfiles = () => {
                 onEdit={() => {}}
                 activeProfile={prof._id === user.current_watching._id}
                 onAvatarClick={(v) =>
-                  manageProfile
-                    ? editProfileHandler(v)
-                    : changeCurrentWatching(prof)
+                  manageProfile ? editProfileHandler(v) : changeCurrentWatching(prof)
                 }
               />
             ))}
-            <div className="profile__wrap">
+            {/* <div className="profile__wrap">
               <div
                 className="bgImage"
                 style={{
@@ -113,14 +116,11 @@ const ManageProfiles = () => {
                 }}
               ></div>
               <div className="profileName">Children</div>
-            </div>
+            </div> */}
             {profiles.length < 4 ? (
-              <div
-                className="profile__wrap add__new"
-                onClick={() => setCurrentSection(3)}
-              >
+              <div className="profile__wrap add__new" onClick={() => setCurrentSection(3)}>
                 <div className="plus">
-                 <AddIcon />
+                  <AddIcon />
                 </div>
                 <div className="profileName">Add New Profile</div>
               </div>
@@ -155,9 +155,7 @@ const ManageProfiles = () => {
         {/* Show Edit Profile */}
         <div
           className={
-            currentSection === 2
-              ? "manageProfiles___wrapper show"
-              : "manageProfiles___wrapper"
+            currentSection === 2 ? "manageProfiles___wrapper show" : "manageProfiles___wrapper"
           }
         >
           <EditProfile
@@ -172,9 +170,7 @@ const ManageProfiles = () => {
         {/* Show Add New Profile */}
         <div
           className={
-            currentSection === 3
-              ? "manageProfiles___wrapper show"
-              : "manageProfiles___wrapper"
+            currentSection === 3 ? "manageProfiles___wrapper show" : "manageProfiles___wrapper"
           }
         >
           <AddNewProfile
@@ -186,9 +182,7 @@ const ManageProfiles = () => {
         {/* Show Update Display Picture */}
         <div
           className={
-            currentSection === 4
-              ? "manageProfiles___wrapper show"
-              : "manageProfiles___wrapper"
+            currentSection === 4 ? "manageProfiles___wrapper show" : "manageProfiles___wrapper"
           }
         >
           <UpdateProfilePicture
@@ -202,4 +196,4 @@ const ManageProfiles = () => {
     </AppLayout>
   );
 };
-export default ManageProfiles;
+export default React.memo(ManageProfiles);

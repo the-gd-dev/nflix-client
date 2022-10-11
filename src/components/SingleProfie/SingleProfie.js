@@ -1,7 +1,7 @@
 import React from "react";
-import appConfig from "../config/appConfig";
-import CheckIcon from "./CheckIcon";
-import PencilIcon from "./PencilIcon";
+import appConfig from "../../config/appConfig";
+import CheckIcon from "../Icons/CheckIcon";
+import PencilIcon from "../Icons/PencilIcon";
 
 const SingleProfie = ({ profile, showEdit, onEdit, showDone, onDone, onAvatarClick, activeProfile }) => {
   return (

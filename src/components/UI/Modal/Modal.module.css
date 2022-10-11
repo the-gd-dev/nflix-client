@@ -1,0 +1,23 @@
+.modal-overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  left: 0;
+  z-index: 9000;
+}
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  z-index: 9900;
+  margin: auto;
+  background-color: wheat;
+}
+.modal-content {
+}

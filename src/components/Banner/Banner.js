@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance, allRequests as requests } from "../../api/movies";
-import RefreshIcon from "../RefreshIcon";
+import RefreshIcon from "../Icons/RefreshIcon";
 import "./Banner.css";
 function Banner(props) {
   const [movie, setMovie] = useState("");
@@ -8,7 +8,6 @@ function Banner(props) {
     const response = await axiosInstance.get(requests.fetchNetflixOriginals);
     const randomNum = Math.round(Math.random() * response.data.results.length);
     setMovie(response.data.results[randomNum]);
-    return response;
   };
   useEffect(() => {
     (async function () {
@@ -21,7 +20,7 @@ function Banner(props) {
   return (
     <header
       className="banner"
-      style={{ backgroundImage: `url(${base_url}/${movie.backdrop_path})` }}
+      style={{ backgroundImage: `url(${base_url}/${movie?.backdrop_path || ''})` }}
     >
       <div className="top__row">
         <button className="refreshIcon" onClick={getMovies}>

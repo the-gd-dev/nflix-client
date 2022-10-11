@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import appConfig from "../../config/appConfig";
-import { removeAuthUser, removeToken } from "../../store/auth/actions";
+import appConfig from "../../../config/appConfig";
+import { removeAuthUser, removeToken } from "../../../store/auth/actions";
 
 const UserDropDown = ({ user }) => {
   const dispatch = useDispatch();
@@ -20,7 +20,6 @@ const UserDropDown = ({ user }) => {
   const settingsPage = () => {
     history.push("/settings");
   }
-  console.log('user drop down', user)
   return (
     <div className="user-profile">
       <div className="selected__profile">

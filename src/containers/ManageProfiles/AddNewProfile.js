@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import appConfig from "../../config/appConfig";
 import axios from "../../utils/axios";
 import { API_POST_PROFILE_CREATE } from "../../api/profiles";
-import ActionBtnGroup from "../../components/ActionBtnGroup/ActionBtnGroup";
-import ActionBtn from "../../components/ActionBtn/ActionBtn";
+import ActionBtnGroup from "../../components/UI/ActionBtnGroup/ActionBtnGroup";
+import ActionBtn from "../../components/UI/ActionBtn/ActionBtn";
 const AddNewProfile = ({ doneBtnHandler, cancelBtnHandler, showToggle }) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const createNewProfile = async () => {
     if (name) {
       const { data } = await axios.post(API_POST_PROFILE_CREATE, {

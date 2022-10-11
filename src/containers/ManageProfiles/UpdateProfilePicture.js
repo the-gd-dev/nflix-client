@@ -1,7 +1,7 @@
 import React from "react";
-import SingleProfie from "../../components/SingleProfie";
-import ActionBtnGroup from "../../components/ActionBtnGroup/ActionBtnGroup";
-import ActionBtn from "../../components/ActionBtn/ActionBtn";
+import SingleProfie from "../../components/SingleProfie/SingleProfie";
+import ActionBtnGroup from "../../components/UI/ActionBtnGroup/ActionBtnGroup";
+import ActionBtn from "../../components/UI/ActionBtn/ActionBtn";
 
 const EditProfile = ({ doneBtnHandler, editData, cancelBtnHandler }) => {
   const avtars = [];

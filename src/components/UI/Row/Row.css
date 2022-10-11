@@ -49,7 +49,7 @@
   z-index: 5;
 }
 .row__posters.posters .poster__wrap img:hover {
-  transform: scale(1.25);
+  transform: scale(1.35);
 }
 .row__posters.thumbnails .poster__wrap:hover {
   transform: scale(1.05);
