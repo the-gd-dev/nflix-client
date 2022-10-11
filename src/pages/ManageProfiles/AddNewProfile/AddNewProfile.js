@@ -6,15 +6,25 @@ import ActionBtnGroup from "../../../components/UI/ActionBtnGroup/ActionBtnGroup
 import ActionBtn from "../../../components/UI/ActionBtn/ActionBtn";
 import ManageForm from "../ManageForm/ManageForm";
 import SingleProfile from "../../../components/SingleProfile/SingleProfile";
-import classes from './AddNewProfile.module.css'
+import classes from "./AddNewProfile.module.css";
 const AddNewProfile = ({ doneBtnHandler, cancelBtnHandler, showToggle }) => {
   const [name, setName] = useState("");
+  const [serverErrorMessages, setServerErrorMessages] = useState("");
+
   const createNewProfile = async () => {
     if (name) {
-      const { data } = await axios.post(API_POST_PROFILE_CREATE, {
-        name,
-      });
-      doneBtnHandler(data.profile);
+      try {
+        const { data } = await axios.post(API_POST_PROFILE_CREATE, {
+          name,
+        });
+        doneBtnHandler(data.profile);
+      } catch (error) {
+        setServerErrorMessages(error?.response?.data?.message || "");
+        var clearTmO = setTimeout(() => {
+          setServerErrorMessages("");
+          clearTimeout(clearTmO);
+        }, 2000);
+      }
     } else {
       setName("");
     }
@@ -22,12 +32,16 @@ const AddNewProfile = ({ doneBtnHandler, cancelBtnHandler, showToggle }) => {
 
   return (
     <div>
-      <div className={classes['page-container']}>
+      <div className={classes["page-container"]}>
         <h1>Add New Profile :</h1>
-        <div className={classes['edit-profile-form']}>
+        <div className={classes["edit-profile-form"]}>
           <SingleProfile profile={{ avatar: 1 }} />
-          <div className={classes['form-container']}>
-            <ManageForm nameValue={name} updateValue={(v) => setName(v)} />
+          <div className={classes["form-container"]}>
+            <ManageForm
+              nameValue={name}
+              updateValue={(v) => setName(v)}
+              externalError={serverErrorMessages}
+            />
           </div>
         </div>
       </div>

@@ -106,11 +106,16 @@
   height: 30px;
   width: 30px;
 }
+.name__avatar__container {
+  display: flex;
+  align-items: center;
+}
 .selected__profile {
   display: flex;
   height: 100%;
   width: 100%;
   align-items: center;
+  justify-content: space-between;
 }
 .dropdown__profile {
   display: flex;

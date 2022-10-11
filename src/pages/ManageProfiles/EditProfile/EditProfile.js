@@ -16,19 +16,28 @@ const EditProfile = ({
 }) => {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [serverErrorMessages, setServerErrorMessages] = useState("");
   useEffect(() => {
     if (editData.name) setName(editData.name);
     if (editData.avatar) setAvatar(editData.avatar);
   }, [editData]);
   const user = useSelector((state) => state.auth.user);
   const updateProfileData = async () => {
-    const { data } = await axios.post(API_POST_PROFILE_UPDATE + "/" + editData._id, {
-      ...editData,
-      name: name ? name : editData.name,
-    });
-    setName("");
-    setAvatar(0);
-    doneBtnHandler(data.profile);
+    try {
+      const { data } = await axios.post(API_POST_PROFILE_UPDATE + "/" + editData._id, {
+        ...editData,
+        name: name ? name : editData.name,
+      });
+      setName("");
+      setAvatar(0);
+      doneBtnHandler(data.profile);
+    } catch (error) {
+      setServerErrorMessages(error?.response?.data?.message || "");
+      var clearTmO = setTimeout(() => {
+        setServerErrorMessages("");
+        clearTimeout(clearTmO);
+      }, 2000);
+    }
   };
   const onDelete = async (profileId) => {
     if (window.confirm("Are you sure ?")) {
@@ -43,7 +52,11 @@ const EditProfile = ({
         <div className={classes["edit-profile-form"]}>
           <SingleProfie profile={{ avatar }} showEdit={true} onEdit={updateProfilePic} />
           <div className={classes["form-container"]}>
-            <ManageForm nameValue={name} updateValue={(v) => setName(v)} />
+            <ManageForm
+              nameValue={name}
+              updateValue={(v) => setName(v)}
+              externalError={serverErrorMessages}
+            />
           </div>
         </div>
       </div>

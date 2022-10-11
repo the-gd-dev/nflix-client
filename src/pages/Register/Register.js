@@ -11,6 +11,7 @@ import axios from "../../utils/axios";
 import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
 import { API_REGISTER_USER } from "../../api/auth";
 const Register = () => {
+  window.document.title = "Netflix Clone - Register"
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);

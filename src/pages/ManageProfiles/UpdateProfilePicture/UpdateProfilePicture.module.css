@@ -12,12 +12,14 @@
   padding: 0.5rem;
   margin: 1rem 0;
   text-align: left;
+  width: 100%;
   border-bottom: #888888 solid 2px;
 }
 .page-container h1 {
   font-size: 2.75rem;
   font-weight: 400;
   padding: 1rem;
+  width: 100%;
   margin: 2rem 0;
   text-align: left;
   border-bottom: #888888 solid 2px;

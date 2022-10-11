@@ -5,7 +5,7 @@ import AppLayout from "../../components/AppLayout/AppLayout";
 import AddNewProfile from "./AddNewProfile/AddNewProfile";
 import axios from "../../utils/axios";
 import { API_GET_PROFILES } from "../../api/profiles";
-import SingleProfie from "../../components/SingleProfile/SingleProfile";
+import SingleProfile from "../../components/SingleProfile/SingleProfile";
 import EditProfile from "./EditProfile/EditProfile";
 import UpdateProfilePicture from "./UpdateProfilePicture/UpdateProfilePicture";
 import CogIcon from "../../components/Icons/CogIcon";
@@ -17,6 +17,7 @@ import CloseIcon from "../../components/Icons/CloseIcon";
 import classes from "./ManageProfiles.module.css";
 import AddNewButton from "./AddNewButton/AddNewButton";
 const ManageProfiles = () => {
+  window.document.title = "Netflix Clone - Manage Profiles";
   const [profiles, setProfiles] = useState([]);
   const [editProfileData, setEditProfileData] = useState({});
   const [currentSection, setCurrentSection] = useState(1);
@@ -29,7 +30,7 @@ const ManageProfiles = () => {
       const { data } = await axios.get(API_GET_PROFILES);
       setProfiles(data.profiles);
     };
-   
+
     getProfiles();
   }, []);
   const editProfileHandler = (profile) => {
@@ -83,7 +84,12 @@ const ManageProfiles = () => {
   };
   return (
     <AppLayout customClasses={["select__profiles"]}>
-      <div className={classes["page-container"]}>
+      <div
+        className={classes["page-container"]}
+        style={{
+          height: 600,
+        }}
+      >
         {/* Show Who's Watching */}
         <div
           className={`${classes["manage-profiles-wrapper"]} ${classes["fetched-profile"]} ${
@@ -93,7 +99,7 @@ const ManageProfiles = () => {
           <h1>Who's Watching ?</h1>
           <div className={classes["profiles-container"]}>
             {profiles.map((prof) => (
-              <SingleProfie
+              <SingleProfile
                 profile={prof}
                 key={prof._id}
                 showEdit={manageProfile}

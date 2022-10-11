@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   padding: 15px 20px;
-  background-color: rgb(251, 164, 4);
+  background-color: rgb(251 164 4 / 77%);
 }
 .alert-message {
   margin-left: 1em;

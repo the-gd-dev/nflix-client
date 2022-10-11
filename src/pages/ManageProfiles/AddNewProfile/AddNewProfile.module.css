@@ -19,6 +19,7 @@
     font-weight: 400;
     padding: 1rem;
     margin: 2rem 0;
+    width: 100% !important;
     text-align: left;
     border-bottom: #888888 solid 2px;
   }
@@ -52,7 +53,7 @@
   
     .edit-profile-form {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       flex-direction: row;
       justify-content: space-between;
     }

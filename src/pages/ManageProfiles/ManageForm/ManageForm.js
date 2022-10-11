@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import classes from "./ManageForm.module.css";
-const ManageForm = ({ updateValue, nameValue }) => {
+const ManageForm = ({ updateValue, nameValue, externalError }) => {
+  const [prevValue, setPrevValue] = useState("");
+  useEffect(() => {
+    setPrevValue(nameValue);
+  }, []);
+
   return (
     <div className={classes["form-group"]}>
       <label htmlFor="name">Name</label>
       <input
         id="name"
         type="text"
-        className={nameValue != null && !nameValue ? classes["is-invalid"] : ""}
+        className={prevValue !== nameValue ? classes["is-invalid"] : ""}
         value={nameValue}
         onInput={(e) => updateValue(e.target.value)}
       />
-      {nameValue != null && !nameValue ? (
+      {prevValue !== nameValue && !externalError && (
         <label className={classes["is-invalid"]}>Name is required.</label>
-      ) : null}
+      )}
+      {externalError && <label className={classes["is-invalid"]}>{externalError}</label>}
     </div>
   );
 };

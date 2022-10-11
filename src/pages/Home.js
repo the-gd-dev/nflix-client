@@ -5,6 +5,7 @@ import Row from "../components/UI/Row/Row";
 import { allRequests as requests } from "../api/movies";
 
 const Home = () => {
+  window.document.title = "Netflix Clone - Browse"
   const moviesRows = [
     {
       id: "01",

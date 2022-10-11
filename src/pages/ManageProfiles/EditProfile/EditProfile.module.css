@@ -20,6 +20,7 @@
   padding: 1rem;
   margin: 2rem 0;
   text-align: left;
+  width: 100% !important;
   border-bottom: #888888 solid 2px;
 }
 

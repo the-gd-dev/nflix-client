@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
 import { API_LOGIN_USER } from "../../api/auth";
 const Login = () => {
+  window.document.title = "Netflix Clone - Login";
   const history = useHistory();
   const dispatch = useDispatch();
   const [username, setUsername] = useState(null);

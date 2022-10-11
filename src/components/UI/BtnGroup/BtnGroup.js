@@ -4,11 +4,11 @@ const BtnGroup = (props) => (
   <div
     className={classes["btn-group"]}
     style={{
+      justifyContent: props.justifyContent,
       maxWidth: props.maxWidth || 300,
     }}
   >
-    {" "}
-    {props.children}{" "}
+    {props.children}
   </div>
 );
 

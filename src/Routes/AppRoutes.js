@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
 import ManageProfiles from "../pages/ManageProfiles/ManageProfiles";
@@ -12,7 +12,9 @@ import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
-  useEffect(() => { dispatch(fetchUser()) }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <Switch>
@@ -22,24 +24,29 @@ const AppRoutes = () => {
           </GuestRoute>
         </Route>
         <Route exact path="/login">
+         
           <GuestRoute />
         </Route>
         <Route exact path="/register">
+          
           <GuestRoute>
             <Register />
           </GuestRoute>
         </Route>
         <Route exact path="/browse">
+          
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
         </Route>
         <Route exact path="/settings">
+         
           <ProtectedRoute>
             <Settings />
           </ProtectedRoute>
         </Route>
         <Route exact path="/manage-profiles">
+         
           <ProtectedRoute>
             <ManageProfiles />
           </ProtectedRoute>
