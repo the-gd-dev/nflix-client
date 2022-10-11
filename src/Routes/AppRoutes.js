@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "../containers/Home";
-import Login from "../containers/Login/Login";
-import ManageProfiles from "../containers/ManageProfiles/ManageProfiles";
-import Register from "../containers/Register/Register";
+import Home from "../pages/Home";
+import Login from "../pages/Login/Login";
+import ManageProfiles from "../pages/ManageProfiles/ManageProfiles";
+import Register from "../pages/Register/Register";
 import { fetchUser } from "../store/auth/actions";
 import GuestRoute from "./GuestRoute";
 import ProtectedRoute from "./ProtectedRoute";

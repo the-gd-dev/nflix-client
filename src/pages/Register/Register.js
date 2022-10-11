@@ -4,7 +4,7 @@ import "./Register.css";
 import bgBanner from "../../assets/images/home-banner.jpg";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import FormSubmitBtn from "../../components/UI/FormSubmitBtn";
+import Button from "../../components/UI/Button/Button";
 import FormInput from "../../components/UI/FormInput/FormInput";
 import signupRules from "./signupRules";
 import axios from "../../utils/axios";
@@ -135,8 +135,10 @@ const Register = () => {
               setConfirmPassword(value);
             }}
           />
-          <FormSubmitBtn
+          <Button
             title="Register"
+            size="xl"
+            color="netflix-red"
             onClickHandler={register}
             isDisabled={disableBtn}
             isLoading={isSubmit}

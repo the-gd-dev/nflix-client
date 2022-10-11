@@ -67,7 +67,7 @@
 }
 @media (min-width: 768px) {
   .login-container {
-    height: 92vh;
+    height: 85vh;
   }
   .login__wrapper {
     padding: 3rem;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AppLayout from "../../components/AppLayout/AppLayout";
-import appConfig from "../../config/appConfig";
 import AddNewProfile from "./AddNewProfile";
 import "./ManageProfiles.css";
 import axios from "../../utils/axios";

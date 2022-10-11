@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../UI/Navbar/Navbar";
+import Navbar from "./Navbar/Navbar";
 import "./AppLayout.css";
-import Footer from "../UI/Footer";
+import Footer from './Footer/Footer';
 const AppLayout = ({ children, bg, overlay, customClasses }) => {
   var windowWidth = window.innerWidth;
   return (
@@ -11,6 +11,7 @@ const AppLayout = ({ children, bg, overlay, customClasses }) => {
     >
       <Navbar />
       {children}
+      <Footer />
     </div>
   );
 };

@@ -1,19 +1,9 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import appConfig from "../../../config/appConfig";
-import { removeAuthUser, removeToken } from "../../../store/auth/actions";
 
-const UserDropDown = ({ user }) => {
-  const dispatch = useDispatch();
+const UserDropDown = ({ user, onLogout }) => {
   const history = useHistory();
-  const logOut = () => {
-    if (window.confirm("Are you sure")) {
-      dispatch(removeToken());
-      dispatch(removeAuthUser());
-      history.push("/");
-    }
-  };
   const selectProfiles = () => {
     history.push("/manage-profiles");
   }
@@ -40,7 +30,7 @@ const UserDropDown = ({ user }) => {
           <li onClick={settingsPage}>
             <i className="fa fa-cog"></i> Settings
           </li>
-          <li onClick={logOut}>
+          <li onClick={onLogout}>
             <i className="fa fa-sign-out"></i> Logout
           </li>
         </ul>

@@ -1,0 +1,38 @@
+.btn {
+  outline: 0;
+  border: 0;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 18px;
+  height: 25px;
+  opacity: 0.8;
+}
+.btn:hover {
+  opacity: 1;
+}
+.btn.xsm {
+  height: 20px;
+}
+.btn.sm {
+  height: 25px;
+}
+.btn.md {
+  height: 30px;
+}
+.btn.lg {
+  height: 40px;
+}
+.btn.xl {
+  height: 45px;
+}
+.btn.netflix-dark {
+  background-color : #1e1e1e;
+  color: #fff;
+}
+.btn.netflix-red {
+  background-color : #e50914;
+  color: #fff;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import bgBanner from "../../assets/images/home-banner.jpg";
-import FormSubmitBtn from "../../components/UI/FormSubmitBtn";
+import Button from "../../components/UI/Button/Button";
 import FormInput from "../../components/UI/FormInput/FormInput";
 import loginRules from "./loginRules";
 import axios from "../../utils/axios";
@@ -93,8 +93,10 @@ const Login = () => {
             }}
             error={errors.password}
           />
-          <FormSubmitBtn
+          <Button
             title="Login"
+            size='xl'
+            color='netflix-red'
             onClickHandler={onSubmit}
             isDisabled={disableBtn}
             isLoading={isSubmit}
