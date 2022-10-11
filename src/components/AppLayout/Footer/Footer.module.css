@@ -3,4 +3,13 @@
     text-align: center;
     padding-top:2rem;
     padding-bottom:1rem;
+    border-top: 1px solid #101010;
+    margin-top: 1em;
+}
+.developerSignature{
+    font-size: 18px;
+}
+.mastHead{
+    font-weight: 500;
+    font-size: 18px;
 }

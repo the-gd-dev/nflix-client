@@ -1,7 +1,7 @@
 import React from "react";
 import ThreeDotLoader from "../ThreeDotLoader/ThreeDotLoader";
 import classes from "./Button.module.css";
-const FormSubmitBtn = (props) => {
+const Button = (props) => {
   const {
     btnProps,
     title,
@@ -23,4 +23,4 @@ const FormSubmitBtn = (props) => {
   );
 };
 
-export default FormSubmitBtn;
+export default Button;

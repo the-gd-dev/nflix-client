@@ -13,7 +13,7 @@ const ModalContainer = ({ children, title, height, width, onClose }) => (
     }}
   >
     <div className={classes["modal-header"]}>
-      <h3 className={classes['modal-title']}>{title || ''}</h3>
+      <h2 className={classes['modal-title']}>{title || ''}</h2>
       <button onClick={onClose} className={classes['close-btn']}>&times;</button>
     </div>
     

@@ -1,89 +1,133 @@
-.navbar.sticky{
-    position: sticky !important;
-    top: 0 !important;
-    background: rgba(0, 0, 0, 0.9) !important;
-    width: 100% !important;
+.navbar.sticky {
+  position: sticky !important;
+  top: 0 !important;
+  background: rgba(0, 0, 0, 0.9) !important;
+  width: 100% !important;
 }
 .User__Opts ul {
-    list-style-type: none;
-    padding:0 ;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
-.User__Opts ul li:not(.NoStyle):hover{
-    background: white;
-    color:#000;
+.User__Opts ul li:hover {
+  color: #fff;
 }
-.User__Opts ul .NoStyle{
-    padding-bottom: 0rem;
+
+.User__Opts::before {
+  position: absolute;
+  top: -0.85em;
+  left: 50%;
+  content: "";
+  border-color: transparent transparent #fff;
+  border-style: solid;
+  border-width: 0 12px 12px;
+  display: inline-block;
+  height: 0;
+  vertical-align: middle;
+  width: 0;
 }
-.User__Opts ul li img {
-    height: 30px;
-    display: inline-block;
+
+.User__Opts {
+  /* display: none; */
+  border-top: #fff solid 3px;
+  position: absolute;
+  right: 18px;
+  top: 4.5rem;
+  padding: 0.5em 0;
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: #fff 0px 0px 5px;
+  animation: slide-down 300ms ease-out forwards;
+}
+.User__Opts ul li i {
+  margin-right: 4px;
 }
 .User__Opts ul li {
-    cursor: pointer;
-    padding:8px 0;
-    padding-left:15px;
-    padding-right:30px;
+  cursor: pointer;
+  padding: 8px 0;
+  padding: 6px 14px;
+  font-size: 18px;
+  color: #858585;
+  transition: all ease-in-out 0.125s;
 }
-.User__Opts{
-    display: none;
-    position: absolute;
-    right: 16px;
-    top: 3.8rem;
-    background: rgba(0, 0, 0, 0.9);
-    box-shadow: #fff 1px 4px 10px;
+.down-trigger {
+  border-color: #fff transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  display: inline-block;
+  height: 0;
+  margin-left: 15px;
+  vertical-align: middle;
+  width: 0;
 }
-.user-profile:hover  .User__Opts {
-    display: block;
+.user-profile:hover .User__Opts {
+  display: block;
 }
 
 .branding svg {
-    fill: #e50914;
-    height: 30px;
+  fill: #e50914;
+  height: 30px;
 }
 
-.username{
-    cursor: pointer;
-    font-size: 18px;
-    position: relative;
-    top: 10px;
-    left: 10px;
+.username {
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  top: 10px;
+  left: 10px;
 }
 
-.navbar{
-    transition: all ease-in-out 0.2s;
-    position: relative;
-    z-index: 999;
-    width: 100%;
-    display: flex;
-    background: transparent;
-    justify-content: space-between;
-    align-items:  center;
-    padding : 1em 3em;
+.navbar {
+  transition: all ease-in-out 0.2s;
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  display: flex;
+  background: transparent;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 3em;
 }
-.user-profile{
-    cursor: pointer;
-    /* padding-right: 5em; */
-    /* background-color: rebeccapurple; */
+.user-profile {
+  cursor: pointer;
+  /* padding-right: 5em; */
+  /* background-color: rebeccapurple; */
 }
-.user-profile img{
-    vertical-align: middle;
-    position: relative;
-    /* top:8px; */
-    height: 40px;
+.user-profile img {
+  vertical-align: middle;
+  position: relative;
+  /* top:8px; */
+  height: 40px;
 }
 .selected__profile .username {
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
-.selected__profile img{
-    height: 30px;
-    width: 30px;
+
+.selected__profile img {
+  height: 30px;
+  width: 30px;
 }
-.selected__profile{
-    display: flex;
-    height: 100%;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
+.selected__profile {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+.dropdown__profile {
+  display: flex;
+  width: 100%;
+  padding: 1px inherit !important;
+}
+.dropdown__profile:hover {
+  background-color: #131313;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

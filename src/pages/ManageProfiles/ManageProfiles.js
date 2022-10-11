@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AppLayout from "../../components/AppLayout/AppLayout";
-import AddNewProfile from "./AddNewProfile";
-import "./ManageProfiles.css";
+import AddNewProfile from "./AddNewProfile/AddNewProfile";
 import axios from "../../utils/axios";
 import { API_GET_PROFILES } from "../../api/profiles";
-import SingleProfie from "../../components/SingleProfie/SingleProfie";
-import EditProfile from "./EditProfile";
-import UpdateProfilePicture from "./UpdateProfilePicture";
+import SingleProfie from "../../components/SingleProfile/SingleProfile";
+import EditProfile from "./EditProfile/EditProfile";
+import UpdateProfilePicture from "./UpdateProfilePicture/UpdateProfilePicture";
 import CogIcon from "../../components/Icons/CogIcon";
 import { updateCurrentWatching } from "../../store/auth/actions";
 import LeftArrow from "../../components/Icons/LeftArrow";
 import ActionBtnGroup from "../../components/UI/ActionBtnGroup/ActionBtnGroup";
 import ActionBtn from "../../components/UI/ActionBtn/ActionBtn";
 import CloseIcon from "../../components/Icons/CloseIcon";
-import AddIcon from "../../components/Icons/AddIcon";
+import classes from "./ManageProfiles.module.css";
+import AddNewButton from "./AddNewButton/AddNewButton";
 const ManageProfiles = () => {
   const [profiles, setProfiles] = useState([]);
   const [editProfileData, setEditProfileData] = useState({});
@@ -29,6 +29,7 @@ const ManageProfiles = () => {
       const { data } = await axios.get(API_GET_PROFILES);
       setProfiles(data.profiles);
     };
+   
     getProfiles();
   }, []);
   const editProfileHandler = (profile) => {
@@ -36,10 +37,9 @@ const ManageProfiles = () => {
     setCurrentSection(2);
   };
 
-
   const updateProfileHandler = async (profile) => {
     if (profile._id === user.current_watching._id) {
-        dispatch(updateCurrentWatching({ current_watching: profile }));
+      dispatch(updateCurrentWatching({ current_watching: profile }));
     }
     const updatedProfiles = profiles.map((p) => {
       if (p._id === profile._id) return profile;
@@ -83,17 +83,15 @@ const ManageProfiles = () => {
   };
   return (
     <AppLayout customClasses={["select__profiles"]}>
-      <div className="page___container">
+      <div className={classes["page-container"]}>
         {/* Show Who's Watching */}
         <div
-          className={
-            currentSection === 1
-              ? "manageProfiles___wrapper fetched__profile show"
-              : "manageProfiles___wrapper fetched__profile"
-          }
+          className={`${classes["manage-profiles-wrapper"]} ${classes["fetched-profile"]} ${
+            currentSection === 1 ? classes.show : ""
+          }`}
         >
           <h1>Who's Watching ?</h1>
-          <div className="profiles__container ">
+          <div className={classes["profiles-container"]}>
             {profiles.map((prof) => (
               <SingleProfie
                 profile={prof}
@@ -106,29 +104,12 @@ const ManageProfiles = () => {
                 }
               />
             ))}
-            {/* <div className="profile__wrap">
-              <div
-                className="bgImage"
-                style={{
-                  background: `url(${appConfig.assetsUrl}/images/children.png) center no-repeat`,
-                  backgroundSize: "cover",
-                }}
-              ></div>
-              <div className="profileName">Children</div>
-            </div> */}
-            {profiles.length < 4 ? (
-              <div className="profile__wrap add__new" onClick={() => setCurrentSection(3)}>
-                <div className="plus">
-                  <AddIcon />
-                </div>
-                <div className="profileName">Add New Profile</div>
-              </div>
-            ) : null}
+            {profiles.length < 4 && <AddNewButton onAddClick={() => setCurrentSection(3)} />}
           </div>
           <ActionBtnGroup>
             {!manageProfile ? (
               <ActionBtn
-                btnClass="manage__btn"
+                btnClass={classes["manage-btn"]}
                 icon={<CogIcon />}
                 title={"Manage Profiles"}
                 onClickHandler={() => setManageProfile(!manageProfile)}
@@ -136,14 +117,14 @@ const ManageProfiles = () => {
             ) : (
               <ActionBtn
                 icon={<CloseIcon />}
-                btnClass="manage__btn"
+                btnClass={classes["manage-btn"]}
                 title={"Cancel"}
                 onClickHandler={() => setManageProfile(!manageProfile)}
               />
             )}
             {!manageProfile && (
               <ActionBtn
-                btnClass="manage__btn"
+                btnClass={classes["manage-btn"]}
                 icon={<LeftArrow />}
                 title={"Back"}
                 onClickHandler={goBackToBrowse}
@@ -153,9 +134,9 @@ const ManageProfiles = () => {
         </div>
         {/* Show Edit Profile */}
         <div
-          className={
-            currentSection === 2 ? "manageProfiles___wrapper show" : "manageProfiles___wrapper"
-          }
+          className={`${classes["manage-profiles-wrapper"]} ${
+            currentSection === 2 ? classes.show : ""
+          }`}
         >
           <EditProfile
             showToggle={currentSection === 2}
@@ -168,9 +149,9 @@ const ManageProfiles = () => {
         </div>
         {/* Show Add New Profile */}
         <div
-          className={
-            currentSection === 3 ? "manageProfiles___wrapper show" : "manageProfiles___wrapper"
-          }
+          className={`${classes["manage-profiles-wrapper"]} ${
+            currentSection === 3 ? classes.show : ""
+          }`}
         >
           <AddNewProfile
             showToggle={currentSection === 3}
@@ -180,9 +161,9 @@ const ManageProfiles = () => {
         </div>
         {/* Show Update Display Picture */}
         <div
-          className={
-            currentSection === 4 ? "manageProfiles___wrapper show" : "manageProfiles___wrapper"
-          }
+          className={`${classes["manage-profiles-wrapper"]} ${
+            currentSection === 4 ? classes.show : ""
+          }`}
         >
           <UpdateProfilePicture
             showToggle={currentSection === 4}

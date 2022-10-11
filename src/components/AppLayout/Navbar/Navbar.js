@@ -1,11 +1,11 @@
 import "./Navbar.css";
 import React, { useEffect, useState } from "react";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import NetflixSvgLogo from "../../Icons/NetflixSvgLogo";
-import UserDropDown from "./UserDropDown";
+import MenuDropDown from "./MenuDropDown";
 import { useHistory } from "react-router-dom";
 import LogoutModal from "./LogoutModal";
-function Navbar() {
+function Navbar(props) {
   const [logoutModalShow, setLogoutModalShow] = useState(false);
   const history = useHistory();
   const stateUser = useSelector((state) => state.auth.user);
@@ -28,21 +28,21 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar" id="navbar-main">
+    <nav
+      className="navbar"
+      id="navbar-main"
+      style={{
+        backgroundColor: props.color,
+      }}
+    >
       {logoutModalShow && (
-        <LogoutModal
-          modalShow={logoutModalShow}
-          onHide={() => setLogoutModalShow(false)}
-        />
+        <LogoutModal modalShow={logoutModalShow} onHide={() => setLogoutModalShow(false)} />
       )}
       <div className="branding" onClick={() => history.push("/browse")}>
         <NetflixSvgLogo />
       </div>
       {stateUser ? (
-        <UserDropDown
-          user={stateUser}
-          onLogout={() => setLogoutModalShow(true)}
-        />
+        <MenuDropDown user={stateUser} onLogout={() => setLogoutModalShow(true)} />
       ) : null}
     </nav>
   );

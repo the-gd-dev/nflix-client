@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import SingleProfie from "../../components/SingleProfie/SingleProfie";
-import axios from "../../utils/axios";
-import { API_POST_PROFILE_TRASH, API_POST_PROFILE_UPDATE } from "../../api/profiles";
-import ActionBtnGroup from "../../components/UI/ActionBtnGroup/ActionBtnGroup";
-import ActionBtn from "../../components/UI/ActionBtn/ActionBtn";
+import SingleProfie from "../../../components/SingleProfile/SingleProfile";
+import axios from "../../../utils/axios";
+import { API_POST_PROFILE_TRASH, API_POST_PROFILE_UPDATE } from "../../../api/profiles";
+import ActionBtnGroup from "../../../components/UI/ActionBtnGroup/ActionBtnGroup";
+import ActionBtn from "../../../components/UI/ActionBtn/ActionBtn";
 import { useSelector } from "react-redux";
-
+import ManageForm from "../ManageForm/ManageForm";
+import classes from "./EditProfile.module.css";
 const EditProfile = ({
   doneBtnHandler,
   editData,
@@ -37,25 +38,12 @@ const EditProfile = ({
   };
   return (
     <div>
-      <div className="page__container">
+      <div className={classes["page-container"]}>
         <h1>Edit Profile :</h1>
-        <div className="form__edit__profile">
+        <div className={classes["edit-profile-form"]}>
           <SingleProfie profile={{ avatar }} showEdit={true} onEdit={updateProfilePic} />
-          <div className="form__container">
-            <form>
-              <section className="nf__form__section">
-                <div className="nf__form__group">
-                  <label htmlFor="">Name</label>
-                  <input
-                    type="text"
-                    value={name}
-                    className={!name ? "is_invalid" : ""}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  {!name ? <label className="is_invalid">Name is required.</label> : null}
-                </div>
-              </section>
-            </form>
+          <div className={classes["form-container"]}>
+            <ManageForm nameValue={name} updateValue={(v) => setName(v)} />
           </div>
         </div>
       </div>

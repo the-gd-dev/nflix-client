@@ -29,10 +29,21 @@
   height: 45px;
 }
 .btn.netflix-dark {
-  background-color : #1e1e1e;
+  background-color: #1e1e1e;
   color: #fff;
 }
 .btn.netflix-red {
-  background-color : #e50914;
+  background-color: #e50914;
   color: #fff;
+}
+.btn.btn-plain:hover {
+  background: #eaeaea;
+  box-shadow: 0 1px 0 rgb(0 0 0 / 20%);
+}
+.btn.btn-plain {
+  background-color: #e6e6e6;
+  background-image: linear-gradient(180deg, #e6e6e6, #ddd);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 20%);
+  color: #000;
+  opacity: 1;
 }

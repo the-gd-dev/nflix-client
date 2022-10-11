@@ -1,8 +1,8 @@
 import React from "react";
 
-const AddIcon = () => {
+const AddIcon = (props) => {
   return (
-    <div className="custom-icon">
+    <div className="custom-icon" >
       <svg  viewBox="0 0 256 256" fill="currentColor">
         <defs></defs>
         <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">

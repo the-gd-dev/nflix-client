@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
 import ManageProfiles from "../pages/ManageProfiles/ManageProfiles";
 import Register from "../pages/Register/Register";
+import Settings from "../pages/Settings/Settings";
 import { fetchUser } from "../store/auth/actions";
 import GuestRoute from "./GuestRoute";
 import ProtectedRoute from "./ProtectedRoute";
@@ -31,6 +32,11 @@ const AppRoutes = () => {
         <Route exact path="/browse">
           <ProtectedRoute>
             <Home />
+          </ProtectedRoute>
+        </Route>
+        <Route exact path="/settings">
+          <ProtectedRoute>
+            <Settings />
           </ProtectedRoute>
         </Route>
         <Route exact path="/manage-profiles">
