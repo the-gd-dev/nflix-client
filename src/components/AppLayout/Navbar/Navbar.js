@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import NetflixSvgLogo from "../../Icons/NetflixSvgLogo";
 import UserDropDown from "./UserDropDown";
 import { useHistory } from "react-router-dom";
@@ -9,7 +9,7 @@ function Navbar() {
   const [logoutModalShow, setLogoutModalShow] = useState(false);
   const history = useHistory();
   const stateUser = useSelector((state) => state.auth.user);
-  
+
   //UseEffect -- singular call
   useEffect(() => {
     const excludedPaths = ["/"];
