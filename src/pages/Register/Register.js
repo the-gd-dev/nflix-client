@@ -139,7 +139,7 @@ const Register = () => {
             title="Register"
             size="xl"
             color="netflix-red"
-            onClickHandler={register}
+            onClick={register}
             isDisabled={disableBtn}
             isLoading={isSubmit}
           />

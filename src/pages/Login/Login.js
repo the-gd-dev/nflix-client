@@ -36,10 +36,11 @@ const Login = () => {
   //login
   const onSubmit = async () => {
     //inputs empty
-    if (!username || !password) return alert("Data is missing.");
+    if (!username || !password) return window.alert("Data is missing.");
     //errors present
-    if (errors.username || errors.password)
+    if (errors.username || errors.password) {
       return alert("Please resolve errors.");
+    }
     setIsSubmit(true);
     setDisableBtn(true);
     try {
@@ -51,20 +52,19 @@ const Login = () => {
       dispatch(saveAuthUser(data.user));
       history.push("/browse");
     } catch (error) {
-      console.error(error)
-      let { data } = error?.response || '';
-     
+      console.error(error);
+      let { data } = error?.response || "";
+
       updateErrors(data.message, "username");
 
       const updateError = setTimeout(() => {
         updateErrors("", "username");
         setTimeout(updateError);
       }, 1500);
-      
+
       setIsSubmit(false);
       setDisableBtn(false);
     }
-
   };
   //rendering
   return (
@@ -95,9 +95,9 @@ const Login = () => {
           />
           <Button
             title="Login"
-            size='xl'
-            color='netflix-red'
-            onClickHandler={onSubmit}
+            size="xl"
+            color="netflix-red"
+            onClick={onSubmit}
             isDisabled={disableBtn}
             isLoading={isSubmit}
           />
