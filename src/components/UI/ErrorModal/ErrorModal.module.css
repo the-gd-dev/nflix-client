@@ -1,0 +1,13 @@
+.modalFooter {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.modalContent h3 {
+  font-weight: normal;
+}
+.modalContent {
+  text-align: center;
+  padding: 18px 0;
+}

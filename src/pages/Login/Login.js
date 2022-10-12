@@ -11,6 +11,9 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
 import { API_LOGIN_USER } from "../../api/auth";
+import Modal from "../../components/UI/Modal/Modal";
+import ErrorModal from "../../components/UI/ErrorModal/ErrorModal";
+import updateErrors from "../../helpers/updateErrors";
 const Login = () => {
   window.document.title = "Netflix Clone - Login";
   const history = useHistory();
@@ -20,27 +23,22 @@ const Login = () => {
   const [errors, setErros] = useState({});
   const [disableBtn, setDisableBtn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-
-  //add remove errors
-  const updateErrors = (err, key) => {
-    let updatedErrors = { ...errors };
-    if (err) {
-      updatedErrors[key] = err;
-    } else {
-      if (updatedErrors[key]) {
-        delete updatedErrors[key];
-      }
-    }
-    setErros(updatedErrors);
-  };
+  const [errorModal, setErrorModal] = useState(false);
+  const [serverErrorMessage, setServerErrorMessage] = useState("");
 
   //login
   const onSubmit = async () => {
     //inputs empty
-    if (!username || !password) return window.alert("Data is missing.");
+    if (!username || !password) {
+      setErrorModal(true);
+      setServerErrorMessage("User credentials required.");
+      return false;
+    }
     //errors present
     if (errors.username || errors.password) {
-      return alert("Please resolve errors.");
+      setErrorModal(true);
+      setServerErrorMessage("Please resolve errors.");
+      return false;
     }
     setIsSubmit(true);
     setDisableBtn(true);
@@ -53,16 +51,9 @@ const Login = () => {
       dispatch(saveAuthUser(data.user));
       history.push("/browse");
     } catch (error) {
-      console.error(error);
       let { data } = error?.response || "";
-
-      updateErrors(data.message, "username");
-
-      const updateError = setTimeout(() => {
-        updateErrors("", "username");
-        setTimeout(updateError);
-      }, 1500);
-
+      setErrorModal(true);
+      setServerErrorMessage(data.status + " : " + data.message);
       setIsSubmit(false);
       setDisableBtn(false);
     }
@@ -70,6 +61,12 @@ const Login = () => {
   //rendering
   return (
     <AppLayout bg={bgBanner} overlay={true}>
+      {errorModal && (
+        <ErrorModal
+          errorMessage={serverErrorMessage}
+          onErrorModalClose={() => setErrorModal(false)}
+        />
+      )}
       <div className="login-container">
         <div className="login__wrapper">
           <div className="login__header">
@@ -79,7 +76,7 @@ const Login = () => {
             label={"Email address"}
             val={username}
             onChangeHandler={(value) => {
-              updateErrors(loginRules.validateEmail(value), "username");
+              setErros(updateErrors(errors, loginRules.validateEmail(value), "username"));
               setUsername(value);
             }}
             error={errors.username}
@@ -89,7 +86,7 @@ const Login = () => {
             label={"Password"}
             val={password}
             onChangeHandler={(value) => {
-              updateErrors(loginRules.validatePassword(value), "password");
+              setErros(updateErrors(errors, loginRules.validatePassword(value), "password"));
               setPassword(value);
             }}
             error={errors.password}

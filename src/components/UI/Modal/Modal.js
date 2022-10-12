@@ -4,9 +4,9 @@ import classes from "./Modal.module.css";
 const ModalOverlay = ({ onOverlayClick }) => {
   return <div onClick={onOverlayClick} className={classes.backdrop}></div>;
 };
-const ModalContainer = ({ children, title, height, width, onClose }) => (
+const ModalContainer = ({ children, title, height, width, onClose, transition = "slide-down" }) => (
   <div
-    className={classes.modal}
+    className={`${classes.modal} ${classes[transition]}`}
     style={{
       maxHeight: height,
       maxWidth: width,
@@ -23,13 +23,19 @@ const ModalContainer = ({ children, title, height, width, onClose }) => (
 );
 const Modal = (props) => {
   const DomContainer = document.getElementById("modal-container");
-  const { children, title, height, width, onCloseModal } = props;
+  const { children, title, height, width, onCloseModal, transitionType } = props;
 
   return (
     <>
       {ReactDOM.createPortal(<ModalOverlay onOverlayClick={onCloseModal} />, DomContainer)}
       {ReactDOM.createPortal(
-        <ModalContainer onClose={onCloseModal} title={title} height={height} width={width}>
+        <ModalContainer
+          onClose={onCloseModal}
+          transition={transitionType}
+          title={title}
+          height={height}
+          width={width}
+        >
           {children}
         </ModalContainer>,
         DomContainer

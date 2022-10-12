@@ -16,6 +16,12 @@ export default {
     if (name && name.length > 30) return "Name can't be greater then 30 characters.";
     return "";
   },
+  validateCode(code) {
+    if (code !== null && code === "") return "Verification Code is required.";
+    if (code && !/^[0-9]/.test(code)) return "Verification Code is not numeric";
+    if (code && code.length !== 6) return "Verification Code is should be 6 digits.";
+    return "";
+  },
   validatePhoneNumber(phoneNumber) {
     if (phoneNumber !== null && phoneNumber === "") return "Phone Number is required.";
     if (phoneNumber && !/^[0-9]/.test(phoneNumber)) return "Phone Number is not numeric";
@@ -24,8 +30,10 @@ export default {
   },
   validateConfirmPassword(password, confirmPassword) {
     if (confirmPassword !== null && confirmPassword === "") return "Confirm Password is required.";
-    if (confirmPassword !== null && confirmPassword.length < 6) return "Atleast 6 characters required.";
-    if (confirmPassword !== null && password !== confirmPassword) return "Please confirm your password.";
+    if (confirmPassword !== null && confirmPassword.length < 6)
+      return "Atleast 6 characters required.";
+    if (confirmPassword !== null && password !== confirmPassword)
+      return "Please confirm your password.";
     return "";
   },
 };

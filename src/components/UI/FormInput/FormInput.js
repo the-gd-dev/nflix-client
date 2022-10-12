@@ -7,7 +7,7 @@ const FormInput = (props) => {
       <div className={`field__wrap ${!!val ? "valid_field_wrap" : ""}`}>
         <input
           type={type}
-          value={val}
+          value={val || ''}
           id={label.replace(" ", "_").toLowerCase()}
           className={`${props.className || ""} ${!!val ? "valid_field" : ""}`}
           onChange={(e) => onChangeHandler(e.target.value.trim())}

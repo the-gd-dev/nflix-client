@@ -2,47 +2,43 @@ import React, { useState } from "react";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import "./Register.css";
 import bgBanner from "../../assets/images/home-banner.jpg";
-import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../../components/UI/Button/Button";
 import FormInput from "../../components/UI/FormInput/FormInput";
 import signupRules from "./signupRules";
 import axios from "../../utils/axios";
 import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
 import { API_REGISTER_USER } from "../../api/auth";
+import ErrorModal from "../../components/UI/ErrorModal/ErrorModal";
+import VerifyUser from "../../components/VerifyUser/VerifyUser";
+import updateErrors from "../../helpers/updateErrors";
 const Register = () => {
-  window.document.title = "Netflix Clone - Register"
-  const [phoneNumber, setPhoneNumber] = useState(null);
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [confirmPassword, setConfirmPassword] = useState(null);
+  window.document.title = "Netflix Clone - Register";
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErros] = useState({});
   const [disableBtn, setDisableBtn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  //add remove errors
-  const updateErrors = (err, key) => {
-    let updatedErrors = { ...errors };
-    if (err) {
-      updatedErrors[key] = err;
-    } else {
-      if (updatedErrors[key]) {
-        delete updatedErrors[key];
-      }
-    }
-    setErros((prevErr) => updatedErrors);
-  };
-
+  const [errorModal, setErrorModal] = useState(false);
+  const [verifyUserShow, setVerifyUserShow] = useState(false);
+  const [serverErrorMessage, setServerErrorMessage] = useState("");
+  const [registeredUser, setRegisteredUser] = useState({});
   const register = async () => {
     //inputs empty
-    if (!name || !email || !phoneNumber || !password)
-      return alert("Data is missing.");
+    if (!name || !email || !phoneNumber || !password) {
+      setErrorModal(true);
+      setServerErrorMessage("Please fill all fields.");
+      return false;
+    }
     //errors present
-    if (errors.name || errors.email || errors.phoneNumber || errors.password)
-      return alert("Please resolve errors.");
-
+    if (errors.name || errors.email || errors.phoneNumber || errors.password) {
+      setErrorModal(true);
+      setServerErrorMessage("Please resolve errors.");
+      return false;
+    }
     setIsSubmit(true);
     setDisableBtn(true);
     try {
@@ -52,12 +48,12 @@ const Register = () => {
         phoneNumber,
         password,
       });
-      dispatch(saveAuthToken(response.token));
-      dispatch(saveAuthUser(response.user));
-      history.push("/browse");
+      setRegisteredUser(response.data.user);
+      setVerifyUserShow(true);
     } catch (error) {
-      let { data } = error.response;
-      updateErrors(data.message, "bad_errors");
+      let { data } = error?.response || "";
+      setErrorModal(true);
+      setServerErrorMessage(data.code + " : " + data.message);
     }
     setIsSubmit(false);
     setDisableBtn(false);
@@ -70,6 +66,15 @@ const Register = () => {
   };
   return (
     <AppLayout bg={bgBanner} overlay={true}>
+      {verifyUserShow && (
+        <VerifyUser onCloseModal={() => setVerifyUserShow(false)} user={registeredUser} />
+      )}
+      {errorModal && (
+        <ErrorModal
+          errorMessage={serverErrorMessage}
+          onErrorModalClose={() => setErrorModal(false)}
+        />
+      )}
       <div className="register-container">
         <div className="register__wrapper">
           <div className="register__header">
@@ -88,7 +93,7 @@ const Register = () => {
             val={name}
             error={errors.name}
             onChangeHandler={(value) => {
-              updateErrors(signupRules.validateName(value), "name");
+              setErros(updateErrors(errors, signupRules.validateName(value), "name"));
               setName(value);
             }}
           />
@@ -97,19 +102,18 @@ const Register = () => {
             label={"Email Address"}
             val={email}
             onChangeHandler={(value) => {
-              updateErrors(signupRules.validateEmail(value), "email");
+              setErros(updateErrors(errors, signupRules.validateEmail(value), "email"));
               setEmail(value);
             }}
             error={errors.email}
           />
           <FormInput
             label={"Phone Number"}
-            val={phoneNumber}
+            type={"number"}
+            className={"hide-arrows"}
+            val={phoneNumber.substring(0, 10)}
             onChangeHandler={(value) => {
-              updateErrors(
-                signupRules.validatePhoneNumber(value),
-                "phoneNumber"
-              );
+              setErros(updateErrors(errors, signupRules.validatePhoneNumber(value), "phoneNumber"));
               setPhoneNumber(value);
             }}
             error={errors.phoneNumber}
@@ -119,9 +123,7 @@ const Register = () => {
             label={"Password"}
             val={password}
             onChangeHandler={(value) => {
-              updateErrors(
-                signupRules.validatePassword(value, confirmPassword)
-              );
+              setErros(updateErrors(errors, signupRules.validatePassword(value), "Password"));
               setPassword(value);
             }}
             error={errors.password}
@@ -132,7 +134,7 @@ const Register = () => {
             label={"Confirm Password"}
             val={confirmPassword}
             onChangeHandler={(value) => {
-              updateErrors(signupRules.validatePassword(password, value));
+              setErros(updateErrors(errors, signupRules.validatePassword(value, password)));
               setConfirmPassword(value);
             }}
           />
