@@ -26,6 +26,7 @@ const Settings = () => {
           updateType={showSettingsUpdateModal}
           title={"Update Settings"}
           onCloseModal={onCloseModalHandler}
+          width={500}
         />
       )}
 

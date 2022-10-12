@@ -96,7 +96,7 @@ const ManageProfiles = () => {
             currentSection === 1 ? classes.show : ""
           }`}
         >
-          <h1>Who's Watching ?</h1>
+          <h1 className={classes["container-heading"]}>Who's Watching ?</h1>
           <div className={classes["profiles-container"]}>
             {profiles.map((prof) => (
               <SingleProfile

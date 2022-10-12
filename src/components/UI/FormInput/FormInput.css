@@ -1,3 +1,4 @@
+.field__wrap input.valid_field,
 .field__wrap input:focus {
   background-color: aliceblue;
   color: #3c3c3c;
@@ -11,12 +12,13 @@
   padding: 0;
 }
 
-
 .field__wrap input:focus + label {
-  margin-top: -3.8em ;
-  font-size: 14px ;
+  margin-top: -3.8em;
+  font-size: 14px;
   position: relative;
   z-index: 15;
+  color: #3c3c3c;
+  font-weight: 500;
 }
 
 .field__wrap input {
@@ -52,10 +54,12 @@
   top: -10px;
   text-transform: capitalize;
 }
+
 .valid_field + label {
   margin-top: -3.8em !important;
   font-size: 14px !important;
   position: relative;
   z-index: 15;
+  color: #3c3c3c;
+  font-weight: 500;
 }
-

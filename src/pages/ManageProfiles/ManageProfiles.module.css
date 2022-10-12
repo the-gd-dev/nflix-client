@@ -14,12 +14,12 @@
   text-align: left;
   border-bottom: #888888 solid 2px;
 }
-.page-container h1 {
+.page-container .container-heading {
   font-size: 2.75rem;
   font-weight: 400;
   padding: 1rem;
   margin: 2rem 0;
-  width: 25%;
+  width: 80%;
   text-align: left;
   border-bottom: #888888 solid 2px;
 }
@@ -273,29 +273,18 @@
 }
 /* md */
 @media (min-width: 768px) {
-  .avtars__section {
-    width: 600px;
-  }
-
   .manage-profiles-wrapper {
     width: 60%;
   }
 }
 /* lg */
 @media (min-width: 1024px) {
-  .page-container h1 {
-    /* font-size: 2.75rem; */
+  .page-container .container-heading {
     font-weight: 400;
     padding: 1rem;
     text-align: left;
   }
 
-  .form__edit__profile {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-  }
   .profile__manager__actions {
     display: flex;
     justify-content: space-evenly;
@@ -303,12 +292,6 @@
   }
   .manage-profiles-wrapper {
     width: 50%;
-  }
-  .nf__form__group label {
-    padding-top: 0;
-  }
-  .nf__form__group.checkbox input:checked + label:after {
-    top: 8px;
   }
 }
 /* xl */
@@ -318,6 +301,9 @@
   }
   .manage-profiles-wrapper.fetched-profile {
     width: 100%;
+  }
+  .page-container .container-heading {
+    width: 40%;
   }
 }
 

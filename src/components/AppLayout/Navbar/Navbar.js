@@ -12,12 +12,10 @@ function Navbar(props) {
 
   //UseEffect -- singular call
   useEffect(() => {
-    const excludedPaths = ["/"];
     function onWindowScroll() {
-      const pathname = window.location.pathname;
       const navbar = document.getElementById("navbar-main");
       navbar.classList.remove("sticky");
-      if (this.scrollY > 0 && !excludedPaths.includes(pathname)) {
+      if (this.scrollY > 0) {
         navbar.classList.add("sticky");
       }
     }

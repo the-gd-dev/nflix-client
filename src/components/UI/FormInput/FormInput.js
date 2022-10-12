@@ -1,18 +1,18 @@
 import React from "react";
 import "./FormInput.css";
-const FormInput = ({ label, val, onChangeHandler, error, type = "text" }) => {
+const FormInput = (props) => {
+  const { label, val, onChangeHandler, error, type = "text" } = props;
   return (
     <div>
-      <div className={`field__wrap`}>
+      <div className={`field__wrap ${!!val ? "valid_field_wrap" : ""}`}>
         <input
           type={type}
+          value={val}
           id={label.replace(" ", "_").toLowerCase()}
-          className={val ? "valid_field" : ""}
+          className={`${props.className || ""} ${!!val ? "valid_field" : ""}`}
           onChange={(e) => onChangeHandler(e.target.value.trim())}
         />
-        {label ? (
-          <label htmlFor={label.replace(" ", "_").toLowerCase()}>{label}</label>
-        ) : null}
+        {label ? <label htmlFor={label.replace(" ", "_").toLowerCase()}>{label}</label> : null}
       </div>
       {error ? <label className="is-error">{error}</label> : null}
     </div>

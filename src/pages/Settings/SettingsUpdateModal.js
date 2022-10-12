@@ -45,6 +45,8 @@ const SettingsUpdateModal = (props) => {
           )}
           {props.updateType === "phone" && (
             <FormInput
+              type="number"
+              className='hide-arrows'
               label={"Phone Number"}
               val={formData.phone}
               onChangeHandler={(value) => {
@@ -79,7 +81,10 @@ const SettingsUpdateModal = (props) => {
                 val={formData.confirm_password}
                 onChangeHandler={(value) => {
                   updateErrors(
-                    userDataRules.validateConfirmPassword(formData.password, formData.confirm_password),
+                    userDataRules.validateConfirmPassword(
+                      formData.password,
+                      formData.confirm_password
+                    ),
                     "confirm_password"
                   );
                   setFormData((prevValue) => ({ ...prevValue, confirm_password: value }));
