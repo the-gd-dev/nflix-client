@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+} from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
 import ManageProfiles from "../pages/ManageProfiles/ManageProfiles";
 import Register from "../pages/Register/Register";
 import Settings from "../pages/Settings/Settings";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import { fetchUser } from "../store/auth/actions";
 import GuestRoute from "./GuestRoute";
 import ProtectedRoute from "./ProtectedRoute";
@@ -24,29 +31,31 @@ const AppRoutes = () => {
           </GuestRoute>
         </Route>
         <Route exact path="/login">
-         
-          <GuestRoute />
+          <GuestRoute>
+            <Redirect to="/" />
+          </GuestRoute>
+        </Route>
+        <Route exact path="/change-password/:token">
+          <GuestRoute>
+            <ChangePassword />
+          </GuestRoute>
         </Route>
         <Route exact path="/register">
-          
           <GuestRoute>
             <Register />
           </GuestRoute>
         </Route>
         <Route exact path="/browse">
-          
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
         </Route>
         <Route exact path="/settings">
-         
           <ProtectedRoute>
             <Settings />
           </ProtectedRoute>
         </Route>
         <Route exact path="/manage-profiles">
-         
           <ProtectedRoute>
             <ManageProfiles />
           </ProtectedRoute>

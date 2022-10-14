@@ -78,9 +78,20 @@ export const updateCurrentWatching = (data) => {
     try {
       const storeState = store.getState();
       const savedUser = storeState.auth.user;
-      if (data?.current_watching && localStorage.getItem("currently_watching")) {
-        localStorage.setItem("currently_watching", JSON.stringify(data.current_watching));
-        dispatch(saveAuthUser({ ...savedUser, current_watching: data.current_watching }));
+      if (
+        data?.current_watching &&
+        localStorage.getItem("currently_watching")
+      ) {
+        localStorage.setItem(
+          "currently_watching",
+          JSON.stringify(data.current_watching)
+        );
+        dispatch(
+          saveAuthUser({
+            ...savedUser,
+            current_watching: data.current_watching,
+          })
+        );
       } else {
         localStorage.setItem(
           "currently_watching",
@@ -109,7 +120,13 @@ export const fetchUser = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(API_GET_USER);
-      dispatch(saveAuthUser(data.user));
+
+      if (data.user) {
+        dispatch(saveAuthUser(data.user));
+      } else {
+        dispatch(removeToken());
+        dispatch(removeAuthUser());
+      }
     } catch (error) {
       const { status } = error?.response;
       if (status === 401 || status === 403) {

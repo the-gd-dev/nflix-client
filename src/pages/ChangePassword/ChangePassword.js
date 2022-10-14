@@ -3,10 +3,8 @@ import AppLayout from "../../components/AppLayout/AppLayout";
 import bgBanner from "../../assets/images/home-banner.jpg";
 import Button from "../../components/UI/Button/Button";
 import FormInput from "../../components/UI/FormInput/FormInput";
-import loginRules from "./loginRules";
-import axios from "../../utils/axios";
 
-import "./Login.css";
+import axios from "../../utils/axios";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { saveAuthToken, saveAuthUser } from "../../store/auth/actions";
@@ -14,13 +12,17 @@ import { API_LOGIN_USER } from "../../api/auth";
 import Modal from "../../components/UI/Modal/Modal";
 import ErrorModal from "../../components/UI/ErrorModal/ErrorModal";
 import updateErrors from "../../helpers/updateErrors";
+import passwordRules from "./passwordRules";
 import AuthFormContainer from "../../components/UI/AuthFormContainer/AuthFormContainer";
-const Login = () => {
+const ChangePassword = () => {
   window.document.title = "Netflix Clone - Login";
   const history = useHistory();
   const dispatch = useDispatch();
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [formData, setFormData] = useState({
+    password: "",
+    new_password: "",
+    confirm_password: "",
+  });
   const [errors, setErros] = useState({});
   const [disableBtn, setDisableBtn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -29,28 +31,10 @@ const Login = () => {
 
   //login
   const onSubmitHandler = async () => {
-    //inputs empty
-    if (!username || !password) {
-      setErrorModal(true);
-      setServerErrorMessage("User credentials required.");
-      return false;
-    }
-    //errors present
-    if (errors.username || errors.password) {
-      setErrorModal(true);
-      setServerErrorMessage("Please resolve errors.");
-      return false;
-    }
-    setIsSubmit(true);
-    setDisableBtn(true);
+    // setIsSubmit(true);
+    // setDisableBtn(true);
     try {
-      const { data } = await axios.post(API_LOGIN_USER, {
-        username,
-        password,
-      });
-      dispatch(saveAuthToken(data.token));
-      dispatch(saveAuthUser(data.user));
-      history.push("/browse");
+      //   const { data } = await axios.post(API_LOGIN_USER, formData);
     } catch (error) {
       let { data } = error?.response || "";
       setErrorModal(true);
@@ -62,52 +46,79 @@ const Login = () => {
   //rendering
   return (
     <AppLayout bg={bgBanner} overlay={true}>
-      <AuthFormContainer
+      <AuthFormContainer 
         isLoading={isSubmit}
         serverErrorMessage={serverErrorMessage}
         errorModal={errorModal}
         errorModalClose={() => setErrorModal(false)}
-        formHeaderTitle={"Sign In"}
+        formHeaderTitle={'Change Password'}
         submitBtn={{
-          title: "Login",
-          onSubmit: onSubmitHandler,
-          disableBtn: disableBtn,
+            title : 'Update Password',
+            onSubmit : onSubmitHandler,
+            disableBtn : disableBtn
         }}
-        footerLink="/register"
-        leftFooterText=" Not on Netflix ? "
-        linkTitle='Sign Up'
-        rightFooterText=" today."
+        footerLink='/login'
+        leftFooterText='I changed my mind want to '
+        linkTitle={'Login'}
+        rightFooterText=' now.'
       >
-        <FormInput
-          label={"Email address"}
-          val={username}
-          onChangeHandler={(value) => {
-            setErros(
-              updateErrors(errors, loginRules.validateEmail(value), "username")
-            );
-            setUsername(value);
-          }}
-          error={errors.username}
-        />
         <FormInput
           type="password"
           label={"Password"}
-          val={password}
+          val={formData.password}
           onChangeHandler={(value) => {
             setErros(
               updateErrors(
                 errors,
-                loginRules.validatePassword(value),
+                passwordRules.validatePassword(value),
                 "password"
               )
             );
-            setPassword(value);
+            setFormData((prevValue) => ({ ...formData, password: value }));
           }}
           error={errors.password}
+        />
+        <FormInput
+          type="password"
+          label={"New Password"}
+          val={formData.new_password}
+          onChangeHandler={(value) => {
+            setErros(
+              updateErrors(
+                errors,
+                passwordRules.validatePassword(value),
+                "new_password"
+              )
+            );
+            setFormData((prevValue) => ({ ...formData, new_password: value }));
+          }}
+          error={errors.new_password}
+        />
+        <FormInput
+          type="password"
+          label={"Confirm Password"}
+          val={formData.confirm_password}
+          onChangeHandler={(value) => {
+            setErros(
+              updateErrors(
+                errors,
+                passwordRules.validateConfirmPassword(
+                  formData.new_password,
+                  value
+                ),
+                "confirm_password"
+              )
+            );
+            setFormData((prevValue) => ({
+              ...formData,
+              confirm_password: value,
+            }));
+          }}
+          error={errors.confirm_password}
         />
       </AuthFormContainer>
     </AppLayout>
   );
 };
 
-export default Login;
+export default ChangePassword;

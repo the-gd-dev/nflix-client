@@ -10,7 +10,7 @@ const FormInput = (props) => {
           value={val || ''}
           id={label.replace(" ", "_").toLowerCase()}
           className={`${props.className || ""} ${!!val ? "valid_field" : ""}`}
-          onChange={(e) => onChangeHandler(e.target.value.trim())}
+          onChange={(e) => onChangeHandler(e.target.value.trimStart())}
         />
         {label ? <label htmlFor={label.replace(" ", "_").toLowerCase()}>{label}</label> : null}
       </div>
