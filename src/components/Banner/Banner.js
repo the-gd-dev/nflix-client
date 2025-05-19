@@ -15,12 +15,11 @@ function Banner(props) {
     })();
   }, []);
   const base_url = "https://image.tmdb.org/t/p/original";
-  const truncate = (str, n) =>
-    str?.length > n ? `${str.substr(0, n - 1)}...` : str;
+  const truncate = (str, n) => (str?.length > n ? `${str.substr(0, n - 1)}...` : str);
   return (
     <header
       className="banner"
-      style={{ backgroundImage: `url(${base_url}/${movie?.backdrop_path || ''})` }}
+      style={{ backgroundImage: `url(${base_url}/${movie?.backdrop_path || ""})` }}
     >
       <div className="top__row">
         <button className="refreshIcon" onClick={getMovies}>
@@ -35,7 +34,7 @@ function Banner(props) {
           <button className="btn my-list">My List</button>
         </div>
         {/* description */}
-        <p>{truncate(movie.overview, 400)}</p>
+        {movie?.overview && <p>{truncate(movie.overview, 300)}</p>}
       </div>
     </header>
   );

@@ -18,6 +18,7 @@
   width: 100%;
   padding-top: 25%;
   padding: 3rem;
+  border-radius: 18px;
 }
 
 .user__help label input {
