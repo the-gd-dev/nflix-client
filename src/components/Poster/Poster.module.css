@@ -1,28 +1,27 @@
 .posterWrap {
   display: flex;
+  margin-left: -50px;
 }
 .movieCount {
   display: inline;
   z-index: -1;
   position: relative;
-     top: -70px;
-    left: 45px;
+  top: -100px;
+  left: 35px;
   color: #272727;
   text-shadow: -1px 1px 0 #a0a0a0, 1px 1px 0 #a0a0a0, 1px -1px 0 #a0a0a0, -1px -1px 0 #a0a0a0;
   display: inline-flex;
-  font-size: 12rem;
+  font-size: 17rem;
   font-weight: 500;
-  z-index: 10;
 }
 .posterBg {
-  border-radius: 18px;
-  width: 200px;
-  height: 280px;
+  width: 150px;
+  height: 200px;
   background-size: cover;
   background-position: center;
   cursor: pointer;
-  transition:all ease-in-out 0.25s;
+  transition: all ease-in-out 0.25s;
 }
 .posterBg:hover {
-	transform: scale(1.125);
+  transform: scale(1.125);
 }

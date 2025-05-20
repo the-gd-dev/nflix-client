@@ -1,7 +1,7 @@
 .navbar.sticky {
   position: sticky !important;
   top: 0 !important;
-  background: rgba(0, 0, 0, 0.9) !important;
+  background: #0a0a0a !important;
   width: 100% !important;
 }
 .User__Opts ul {
@@ -12,7 +12,24 @@
 .User__Opts ul li:hover {
   color: #fff;
 }
-
+.branding-and-links {
+  display: flex;
+  align-items: center;
+}
+.home-links li:hover {
+  color: #c5c5c5;
+}
+.home-links li {
+  cursor: pointer;
+  font-size: 1em;
+}
+.home-links {
+  display: none;
+  margin-left: 1.25em;
+  list-style: none;
+  gap: 15px;
+  font-weight: 500;
+}
 .User__Opts::before {
   position: absolute;
   top: -0.85em;
@@ -86,6 +103,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1em 3em;
+  background: linear-gradient(rgba(0, 0, 0), transparent);
 }
 .user-profile {
   cursor: pointer;
@@ -124,6 +142,12 @@
 }
 .dropdown__profile:hover {
   background-color: #131313;
+}
+
+@media screen and (min-width: 1024px) {
+  .home-links {
+    display: flex;
+  }
 }
 
 @keyframes slide-down {

@@ -36,9 +36,20 @@ function Navbar(props) {
       {logoutModalShow && (
         <LogoutModal modalShow={logoutModalShow} onHide={() => setLogoutModalShow(false)} />
       )}
-      <div className="branding" onClick={() => history.push("/browse")}>
-        <NetflixSvgLogo />
+      <div className="branding-and-links">
+        <div className="branding" onClick={() => history.push("/browse")}>
+          <NetflixSvgLogo />
+        </div>
+        <ul className="home-links">
+          <li>Home</li>
+          <li>TV Shows</li>
+          <li>Movies</li>
+          <li>Games</li>
+          <li>My List</li>
+          <li>Browse By Languages</li>
+        </ul>
       </div>
+
       {stateUser ? (
         <MenuDropDown user={stateUser} onLogout={() => setLogoutModalShow(true)} />
       ) : null}

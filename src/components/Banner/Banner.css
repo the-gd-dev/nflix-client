@@ -1,3 +1,6 @@
+.App__Header {
+  height: 80vh;
+}
 .banner {
   display: flex;
   flex-direction: column;
@@ -5,10 +8,22 @@
   box-sizing: border-box;
   background-position: top;
   background-size: cover;
-  height: 30rem;
+  height: 100%;
   position: relative;
-  top: -5rem;
+  top: -5.25rem;
   background-repeat: no-repeat;
+}
+.banner * {
+  position: relative;
+  z-index: 15;
+}
+.App__Header .backdrop {
+  height: 200px;
+  background: linear-gradient(360deg, #0a0a0a, transparent);
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  margin-top: -17.5rem;
 }
 .banner__contents {
   padding: 3rem 2rem;
@@ -30,7 +45,10 @@
   padding: 18px 0;
 }
 .banner__contents .btn-group .btn:hover {
-  background-color: rgba(255, 255, 255);
+  background-color: rgb(51 51 51);
+}
+.banner__contents .btn-group .btn.play {
+  background-color: white !important;
   color: rgb(42, 42, 42);
 }
 .banner__contents .btn-group .btn {
@@ -39,8 +57,10 @@
   border: none;
   cursor: pointer;
   padding: 12px 30px;
-  border-radius: 3px;
+  border-radius: 4px;
   margin-right: 1em;
+  font-size: medium;
+  font-weight: 500;
   background-color: rgb(51 51 51 / 50%);
   color: #fff;
 }
@@ -49,8 +69,8 @@
   height: 30px;
 }
 .refreshIcon:hover {
-    background-color: #fff;
-    color: #888;
+  background-color: #fff;
+  color: #888;
 }
 .refreshIcon {
   float: right;
