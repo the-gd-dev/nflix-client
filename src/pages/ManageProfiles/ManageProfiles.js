@@ -84,12 +84,7 @@ const ManageProfiles = () => {
   };
   return (
     <AppLayout customClasses={["select__profiles"]}>
-      <div
-        className={classes["page-container"]}
-        style={{
-          height: 600,
-        }}
-      >
+      <div className={classes["page-container"]}>
         {/* Show Who's Watching */}
         <div
           className={`${classes["manage-profiles-wrapper"]} ${classes["fetched-profile"]} ${

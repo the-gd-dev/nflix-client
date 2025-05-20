@@ -21,11 +21,6 @@ function Banner(props) {
       className="banner"
       style={{ backgroundImage: `url(${base_url}/${movie?.backdrop_path || ""})` }}
     >
-      <div className="top__row">
-        <button className="refreshIcon" onClick={getMovies}>
-          <RefreshIcon />
-        </button>
-      </div>
       <div className="banner__contents">
         <h1>{movie?.name || movie?.name || movie?.original_name}</h1>
         {/* buttons */}
@@ -35,6 +30,11 @@ function Banner(props) {
         </div>
         {/* description */}
         {movie?.overview && <p>{truncate(movie.overview, 300)}</p>}
+      </div>
+      <div className="top__row">
+        <button className="refreshIcon" onClick={getMovies}>
+          <RefreshIcon />
+        </button>
       </div>
     </header>
   );

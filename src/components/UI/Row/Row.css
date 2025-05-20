@@ -42,11 +42,15 @@
 }
 
 .poster__wrap {
+  border-radius: 18px;
   object-fit: cover;
-  margin-right: 1em;
+  overflow: hidden;
   cursor: pointer;
-  width: 100%;
+  min-width: 350px;
   z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .row__posters.posters .poster__wrap img:hover {
   transform: scale(1.35);
@@ -55,7 +59,8 @@
   transform: scale(1.05);
 }
 .poster__wrap:hover .movie-info {
-  opacity: 1;
+ opacity: 1;
+ bottom: 0;
 }
 .controls.posters {
   top: -270px;

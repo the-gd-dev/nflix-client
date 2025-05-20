@@ -5,7 +5,7 @@ import Row from "../components/UI/Row/Row";
 import { allRequests as requests } from "../api/movies";
 
 const Home = () => {
-  window.document.title = "Netflix Clone - Browse"
+  window.document.title = "Netflix Clone - Browse";
   const moviesRows = [
     {
       id: "01",
@@ -47,15 +47,17 @@ const Home = () => {
   return (
     <AppLayout customClasses={["Home"]}>
       <Banner />
-      {moviesRows.map((mr, key) => (
-        <Row
-          key={mr.id}
-          timeOutValue={2000 * parseInt(mr.id)}
-          isLargeRow={!!mr?.isLargeRow}
-          title={mr.title}
-          fetchURL={mr.fetchURL}
-        />
-      ))}
+      <div className="Movies__Rows">
+        {moviesRows.map((mr, key) => (
+          <Row
+            key={mr.id}
+            timeOutValue={2000 * parseInt(mr.id)}
+            isLargeRow={!!mr?.isLargeRow}
+            title={mr.title}
+            fetchURL={mr.fetchURL}
+          />
+        ))}
+      </div>
     </AppLayout>
   );
 };

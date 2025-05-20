@@ -33,7 +33,7 @@ const Settings = () => {
       <main className={classes["settings-container"]}>
         <div className={classes["settings-wrapper"]}>
           <h1>Account</h1>
-          <Alert alertMessage="Your account has already been cancelled." />
+          {/* <Alert alertMessage="Your account has already been cancelled." /> */}
         </div>
         <div className={classes["settings-wrapper"]}>
           <section className={classes["setting-section"]}>

@@ -10,3 +10,13 @@
 .ml-4 {
   margin-left: 8px;
 }
+.App {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 1500px;
+  min-width: 375px;
+}
+.Movies__Rows{ 
+  margin-top: -5rem;
+}

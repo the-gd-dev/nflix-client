@@ -5,7 +5,8 @@
   display: inline;
   z-index: -1;
   position: relative;
-  top: -0.35em;
+     top: -70px;
+    left: 45px;
   color: #272727;
   text-shadow: -1px 1px 0 #a0a0a0, 1px 1px 0 #a0a0a0, 1px -1px 0 #a0a0a0, -1px -1px 0 #a0a0a0;
   display: inline-flex;
@@ -14,6 +15,7 @@
   z-index: 10;
 }
 .posterBg {
+  border-radius: 18px;
   width: 200px;
   height: 280px;
   background-size: cover;
